@@ -7,29 +7,28 @@
 #include "SharpGP2Y10.h"
 struct SharpGP2Y10 sharpgp2y10_config;
 
-SharpGP2Y10_init(int voPin, int ledPin) {
-//    pinMode(ledPin, OUTPUT);
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13,GPIO_PIN_SET);
-    sharpgp2y10_config.voPin = voPin;
-    sharpgp2y10_config.ledPin = ledPin;
+
+void SharpGP2Y10_Init(ADC_HandleTypeDef *adcx, struct PinSetup *LedPin) {
+    sharpgp2y10_config.adcx = adcx;
+    sharpgp2y10_config.LedPin->GPIOx = LedPin->GPIOx;
+    sharpgp2y10_config.LedPin->Pin = LedPin->Pin;
+    pinMode(sharpgp2y10_config.LedPin, OUTPUT);
 }
 
 
 
 void calc() {
-//    digitalWrite(ledPin, LOW); //turn on LED
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13,GPIO_PIN_RESET);
+    digitalWrite(sharpgp2y10_config.LedPin, LOW); //turn on LED
 
-//    delayMicroseconds(SharpGP2Y10_SAMPLINGTIME);     //Sampling time
+    delayMicroseconds(SharpGP2Y10_SAMPLINGTIME);     //Sampling time
 
-//    sharpgp2y10_config.volMeasured = analogRead(voPin);    //read ADC VoPin
+    sharpgp2y10_config.volMeasured = (float)analogRead(sharpgp2y10_config.adcx);    //read ADC VoPin
 
-//    delayMicroseconds(SharpGP2Y10_DELTATIME);
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13,GPIO_PIN_SET);
-//    digitalWrite(ledPin, HIGH); //turn off LED
-//    delayMicroseconds(SharpGP2Y10_SLEEPINGTIME);
+    delayMicroseconds(SharpGP2Y10_DELTATIME);
+    digitalWrite(sharpgp2y10_config.LedPin, HIGH); //turn on LED
+    delayMicroseconds(SharpGP2Y10_SLEEPINGTIME);
 
-    sharpgp2y10_config.calcVoltage = sharpgp2y10_config.volMeasured * (vccVol / 1024);   //calc real Voltage
+    sharpgp2y10_config.calcVoltage = (sharpgp2y10_config.volMeasured * (sharpgp2y10_config.vccVol / 1024));   //calc real Voltage
 
     // Linear equation taken from http://www.howmuchsnow.com/arduino/airquality/
     // Chris Nafis (c) 2012

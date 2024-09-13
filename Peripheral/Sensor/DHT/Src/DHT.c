@@ -173,8 +173,6 @@ uint8_t readDHT11(dht11_t *dht)
 
 	dht->temperature = tempVal;
 	dht->humidty = humVal;
-
-
 	return 1;
 }
 

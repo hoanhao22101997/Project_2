@@ -25,6 +25,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Gpio/Inc/gpio.h \
+ C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Timer/Inc/timer.h \
  C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Sensor/DHT/Inc/DHT.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -53,4 +55,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
+C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Gpio/Inc/gpio.h:
+C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Timer/Inc/timer.h:
 C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Sensor/DHT/Inc/DHT.h:

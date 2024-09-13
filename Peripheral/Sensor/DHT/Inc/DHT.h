@@ -10,7 +10,8 @@
 
 #include "stm32f1xx.h"
 #include "stm32f1xx_hal_gpio.h"
-
+#include "timer.h"
+#include "gpio.h"
 #define OUTPUT 1
 #define INPUT 0
 

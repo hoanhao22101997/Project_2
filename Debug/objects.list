@@ -21,3 +21,7 @@
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.o"
 "./Peripheral/Sensor/DHT/Src/DHT.o"
+"./Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.o"
+"./Peripheral/Wrapper/Analog/Src/analog.o"
+"./Peripheral/Wrapper/Gpio/Src/gpio.o"
+"./Peripheral/Wrapper/Timer/Src/timer.o"

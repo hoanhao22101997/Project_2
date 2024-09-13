@@ -28,7 +28,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-#include "DHT.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -58,8 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define dht11_1_GPIO_Port_Pin GPIO_PIN_2
-#define dht11_1_GPIO_Port_GPIO_Port GPIOA
+#define DHT11_PIN_Pin GPIO_PIN_2
+#define DHT11_PIN_GPIO_Port GPIOA
+#define DHT_Pin GPIO_PIN_3
+#define DHT_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

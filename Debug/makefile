@@ -9,6 +9,10 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Peripheral/Wrapper/Timer/Src/subdir.mk
+-include Peripheral/Wrapper/Gpio/Src/subdir.mk
+-include Peripheral/Wrapper/Analog/Src/subdir.mk
+-include Peripheral/Sensor/SharpGP2Y10/Src/subdir.mk
 -include Peripheral/Sensor/DHT/Src/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk

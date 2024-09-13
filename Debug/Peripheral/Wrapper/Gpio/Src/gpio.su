@@ -1,0 +1,3 @@
+../Peripheral/Wrapper/Gpio/Src/gpio.c:8:6:pinMode	32	static
+../Peripheral/Wrapper/Gpio/Src/gpio.c:29:6:digitalWrite	16	static
+../Peripheral/Wrapper/Gpio/Src/gpio.c:43:9:digitalRead	24	static

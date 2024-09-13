@@ -11,6 +11,9 @@
 #include "main.h"
 #include "stm32f1xx_hal_gpio.h"
 #include "stm32f1xx_ll_adc.h"
+#include "timer.h"
+#include "gpio.h"
+#include "analog.h"
 /*!
 @file     SharpGP2Y10.h
 @author   lnquy065
@@ -33,14 +36,16 @@ First version of an Arduino Library for the SharpGP2Y10 dust sensor
 #define SharpGP2Y10_DELTATIME 40
 #define SharpGP2Y10_SLEEPINGTIME 9680
 
-struct SharpGP2Y10{
-    int voPin;
-    int ledPin;
-    float dustDensit;
-    float volMeasured;
-    float calcVoltage;
-    float vccVol;
+struct SharpGP2Y10
+{
+	ADC_HandleTypeDef 	*adcx;
+	struct PinSetup		*LedPin;
+    float 				dustDensity;
+    float 				volMeasured;
+    float 				calcVoltage;
+    float 				vccVol;
 };
+
 float getDustDensityField();
 float getDustDensity();
 
@@ -50,7 +55,8 @@ float getVotage();
 int getADCField();
 int getADC();
 
-void SharpGP2Y10_Init(int voPin, int ledPin);
+void SharpGP2Y10_Init(ADC_HandleTypeDef 	*adcx, struct PinSetup *LedPin);
+
 
 extern struct SharpGP2Y10 sharpgp2y10_config;
 #endif /* SENSOR_SHARPGP2Y10_INC_SHARPGP2Y10_H_ */
