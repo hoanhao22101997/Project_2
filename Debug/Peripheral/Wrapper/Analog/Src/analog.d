@@ -1,6 +1,6 @@
 Peripheral/Wrapper/Analog/Src/analog.o: \
  ../Peripheral/Wrapper/Analog/Src/analog.c \
- C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h \
  ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -27,7 +27,7 @@ Peripheral/Wrapper/Analog/Src/analog.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
-C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:

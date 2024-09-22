@@ -1,6 +1,6 @@
 Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.o: \
  ../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c \
- C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h \
  ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -28,10 +28,10 @@ Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_adc.h \
- C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Timer/Inc/timer.h \
- C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Gpio/Inc/gpio.h \
- C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h
-C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h:
+ C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Timer/Inc/timer.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Gpio/Inc/gpio.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h
+C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -60,6 +60,6 @@ C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Se
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_adc.h:
-C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Timer/Inc/timer.h:
-C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Gpio/Inc/gpio.h:
-C:/Users/phat.nguyen-thanh/STM32CubeIDE/workspace_1.13.1/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Timer/Inc/timer.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Gpio/Inc/gpio.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/Peripheral/Wrapper/Analog/Inc/analog.h:
