@@ -1,8 +1,0 @@
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:11:6:SharpGP2Y10_Init	1
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:20:6:calc	2
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:46:7:getDustDensity	1
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:52:7:getVotage	1
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:58:5:getADC	1
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:67:7:getDustDensityField	1
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:72:7:getVotageField	1
-../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c:77:5:getADCField	1
