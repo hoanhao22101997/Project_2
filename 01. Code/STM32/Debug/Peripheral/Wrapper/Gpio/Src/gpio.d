@@ -1,5 +1,5 @@
 Peripheral/Wrapper/Gpio/Src/gpio.o: ../Peripheral/Wrapper/Gpio/Src/gpio.c \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Gpio/Inc/gpio.h \
  ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h \
  ../Drivers/CMSIS/Include/core_cm3.h \
@@ -23,11 +23,12 @@ Peripheral/Wrapper/Gpio/Src/gpio.o: ../Peripheral/Wrapper/Gpio/Src/gpio.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Gpio/Inc/gpio.h:
 ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h:
 ../Drivers/CMSIS/Include/core_cm3.h:
@@ -51,6 +52,7 @@ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:

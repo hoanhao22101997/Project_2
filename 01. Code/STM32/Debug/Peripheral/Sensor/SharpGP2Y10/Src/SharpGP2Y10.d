@@ -1,6 +1,6 @@
 Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.o: \
  ../Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.c \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h \
  ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -24,15 +24,16 @@ Peripheral/Sensor/SharpGP2Y10/Src/SharpGP2Y10.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_adc.h \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Timer/Inc/timer.h \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.h \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Analog/Inc/analog.h
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h:
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Timer/Inc/timer.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Gpio/Inc/gpio.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Analog/Inc/analog.h
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Sensor/SharpGP2Y10/Inc/SharpGP2Y10.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -57,11 +58,12 @@ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Sensor/SharpGP2Y10/Inc
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_adc.h:
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Timer/Inc/timer.h:
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.h:
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Analog/Inc/analog.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Timer/Inc/timer.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Gpio/Inc/gpio.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Analog/Inc/analog.h:

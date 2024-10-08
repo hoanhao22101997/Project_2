@@ -14,6 +14,7 @@ RM := rm -rf
 -include Peripheral/Wrapper/Analog/Src/subdir.mk
 -include Peripheral/Sensor/SharpGP2Y10/Src/subdir.mk
 -include Peripheral/Sensor/DHT/Src/subdir.mk
+-include Peripheral/Monitor/Oled/Src/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -65,8 +66,8 @@ all: main-build
 main-build: Project_2.elf secondary-outputs
 
 # Tool invocations
-Project_2.elf Project_2.map: $(OBJS) $(USER_OBJS) C:\Users\MSI\Desktop\DAMH2\Project_2\01.\ Code\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Project_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\MSI\Desktop\DAMH2\Project_2\01. Code\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Project_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Project_2.elf Project_2.map: $(OBJS) $(USER_OBJS) C:\Users\MSI\Desktop\DAMH2\Project_2\01.\ Code\STM32\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Project_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\MSI\Desktop\DAMH2\Project_2\01. Code\STM32\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Project_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

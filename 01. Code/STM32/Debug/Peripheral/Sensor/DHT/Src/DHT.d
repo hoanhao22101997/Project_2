@@ -1,5 +1,5 @@
 Peripheral/Sensor/DHT/Src/DHT.o: ../Peripheral/Sensor/DHT/Src/DHT.c \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Sensor/DHT/Inc/DHT.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Sensor/DHT/Inc/DHT.h \
  ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h \
  ../Drivers/CMSIS/Include/core_cm3.h \
@@ -23,14 +23,15 @@ Peripheral/Sensor/DHT/Src/DHT.o: ../Peripheral/Sensor/DHT/Src/DHT.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Timer/Inc/timer.h \
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Timer/Inc/timer.h \
  ../Core/Inc/main.h \
- C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.h
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Sensor/DHT/Inc/DHT.h:
+ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Gpio/Inc/gpio.h
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Sensor/DHT/Inc/DHT.h:
 ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h:
 ../Drivers/CMSIS/Include/core_cm3.h:
@@ -54,10 +55,11 @@ C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Sensor/DHT/Inc/DHT.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Timer/Inc/timer.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Timer/Inc/timer.h:
 ../Core/Inc/main.h:
-C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/Peripheral/Wrapper/Gpio/Inc/gpio.h:
+C:/Users/MSI/Desktop/DAMH2/Project_2/01.\ Code/STM32/Peripheral/Wrapper/Gpio/Inc/gpio.h:

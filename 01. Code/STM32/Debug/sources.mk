@@ -25,6 +25,7 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32F1xx_HAL_Driver/Src \
+Peripheral/Monitor/Oled/Src \
 Peripheral/Sensor/DHT/Src \
 Peripheral/Sensor/SharpGP2Y10/Src \
 Peripheral/Wrapper/Analog/Src \
