@@ -55,7 +55,14 @@ const unsigned char feeefeee [] PROGMEM = {
 	0x00, 0x00, 0x00, 0x70, 0x73, 0x73, 0x73, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-Adafruit_ST7735 tft = Adafruit_ST7735(2, 3, 4,5,6);
+constexpr int Pin_LCD_CS = 27;
+constexpr int Pin_LCD_RS = 23;
+constexpr int Pin_LCD_RST = 22;
+constexpr int Pin_LCD_SCLK = 14;
+constexpr int Pin_LCD_MISO = 12;
+constexpr int Pin_LCD_SDA = 13;
+Adafruit_ST7735 tft = Adafruit_ST7735(Pin_LCD_CS, Pin_LCD_RS, Pin_LCD_SDA, Pin_LCD_SCLK, Pin_LCD_RST);  // CS, DC, MOSI, SCLK, RST
+
 
 const char* ssid = "PQ";              // Tên mạng WiFi của bạn
 const char* password = "99999999";    // Mật khẩu mạng của bạn
@@ -80,9 +87,11 @@ typedef struct {
 	uint8_t d_temp;
 	uint16_t d_ppm;
 	uint16_t d_co;
-
+  uint8_t speed;
 } LoRaFrame;
-LoRaFrame LoRaRx;
+LoRaFrame LoRaRx1;
+LoRaFrame LoRaRx2;
+
 LoRaFrame LoRaTx;;
 // uint8_t CalculateCRC(LoRaFrame *frame, uint16_t dataLength) {
 // 	uint8_t crc = 0;
@@ -112,14 +121,61 @@ void LoRa_SendFrame(uint8_t id, uint8_t rw, LoRaFrame *data) {
   Serial2.write(buf);
 	// HAL_UART_Transmit(&huart1, (uint8_t*) buf, strlen(buf), 100);
 }
+void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
+  char buf_t1[50];
+  char buf_t2[50];
 
-void setup() {
-  // Khởi tạo UART0 với baud rate 115200 (giao tiếp với máy tính qua Serial Monitor)
-  Serial.begin(115200);
-  tft.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
+  char buf_h1[50];
+  char buf_h2[50];
+
+  char buf_co1[50];
+  char buf_co2[50];
+
+  char buf_ppm1[50];
+  char buf_ppm2[50];
+
+  char buf_sp1[50];
+  char buf_sp2[50];
+
+  sprintf(buf_t1, "Temp:%u C", pLoraFrame1->d_temp);
+  sprintf(buf_t2, "Temp:%u C", pLoraFrame2->d_temp);
+
+  sprintf(buf_h1, "Humi:%u%%", pLoraFrame1->d_humi);
+  sprintf(buf_h2, "Humi:%u%%", pLoraFrame2->d_humi);
+
+  sprintf(buf_co1, "CO:%Lu%%", pLoraFrame1->d_co);
+  sprintf(buf_co2, "CO:%Lu%%", pLoraFrame2->d_co);
+
+  sprintf(buf_ppm1, "PPM:%Lu%%", pLoraFrame1->d_ppm);
+  sprintf(buf_ppm2, "PPM:%Lu%%", pLoraFrame2->d_ppm);
+
+  sprintf(buf_sp1, "Speed:%u%%", pLoraFrame1->speed);
+  sprintf(buf_sp2, "Speed:%u%%", pLoraFrame2->speed);
+
   tft.setRotation(1);
- tft.fillScreen(ST7735_BLACK);
   tft.setTextSize(1);
+
+  // Xóa từng vùng trước khi cập nhật
+  tft.fillRect(40, 60, 80, 10, ST7735_BLACK);   // Xóa vùng NODE GATEWAY
+  tft.fillRect(0, 70, 40, 10, ST7735_BLACK);    // Xóa vùng NODE1
+  tft.fillRect(90, 70, 40, 10, ST7735_BLACK);   // Xóa vùng NODE2
+
+  tft.fillRect(0, 80, 80, 10, ST7735_BLACK);    // Xóa vùng Temp NODE1
+  tft.fillRect(90, 80, 80, 10, ST7735_BLACK);   // Xóa vùng Temp NODE2
+
+  tft.fillRect(0, 90, 80, 10, ST7735_BLACK);    // Xóa vùng Humi NODE1
+  tft.fillRect(90, 90, 80, 10, ST7735_BLACK);   // Xóa vùng Humi NODE2
+
+  tft.fillRect(0, 100, 80, 10, ST7735_BLACK);   // Xóa vùng CO NODE1
+  tft.fillRect(90, 100, 80, 10, ST7735_BLACK);  // Xóa vùng CO NODE2
+
+  tft.fillRect(0, 110, 80, 10, ST7735_BLACK);   // Xóa vùng PPM NODE1
+  tft.fillRect(90, 110, 80, 10, ST7735_BLACK);  // Xóa vùng PPM NODE2
+
+  tft.fillRect(0, 120, 80, 10, ST7735_BLACK);   // Xóa vùng Speed NODE1
+  tft.fillRect(90, 120, 80, 10, ST7735_BLACK);  // Xóa vùng Speed NODE2
+
+  // Hiển thị nội dung mới
   tft.setTextColor(ST7735_RED);
   tft.setCursor(40, 60);
   tft.print("NODE GATEWAY");
@@ -131,36 +187,48 @@ void setup() {
 
   tft.setTextColor(ST7735_BLUE);
   tft.setCursor(0, 80);
-  tft.print("Temp:31*C");
+  tft.print(buf_t1);
   tft.setCursor(90, 80);
-  tft.print("Temp:32*C");
+  tft.print(buf_t2);
 
   tft.setTextColor(ST7735_BLUE);
   tft.setCursor(0, 90);
-  tft.print("Humi:97%");
+  tft.print(buf_h1);
   tft.setCursor(90, 90);
-  tft.print("Humi:80%");
+  tft.print(buf_h2);
 
   tft.setTextColor(ST7735_YELLOW);
   tft.setCursor(0, 100);
-  tft.print("CO:123%");
+  tft.print(buf_co1);
   tft.setCursor(90, 100);
-  tft.print("CO:312%");
+  tft.print(buf_co2);
 
   tft.setTextColor(ST7735_GREEN);
   tft.setCursor(0, 110);
-  tft.print("PPM:123%");
+  tft.print(buf_ppm1);
   tft.setCursor(90, 110);
-  tft.print("PPM:123%");
+  tft.print(buf_ppm2);
 
   tft.setTextColor(ST7735_GREEN);
   tft.setCursor(0, 120);
-  tft.print("Speed:70%");
+  tft.print(buf_sp1);
   tft.setCursor(90, 120);
-  tft.print("Speed:60%");
+  tft.print(buf_sp2);
+}
+
+
+void setup() {
+  // Khởi tạo UART0 với baud rate 115200 (giao tiếp với máy tính qua Serial Monitor)
+  Serial.begin(115200);
+  
+  tft.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
+  tft.fillScreen(ST7735_BLACK);
+  tft.enableDisplay(true);
+  UpdateTFT(&LoRaRx1,&LoRaRx2);
 
   tft.drawBitmap(0, 0, uteute_min, 56, 56, ST7735_WHITE);
   tft.drawBitmap(60, 0, feeefeee, 50, 50, ST7735_WHITE);
+
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
   delay(1000);
@@ -200,41 +268,43 @@ if (Serial2.available()) {
     a.toCharArray(buffer, sizeof(buffer));  // Chuyển đổi thành mảng ký tự
 
     // Cắt dữ liệu từ chuỗi
-    sscanf(buffer, "ID:%hhu RW:%hhu HUMI:%hhu TEMP:%hhu PPM:%hu CO:%hu \n\r", &id, &rw, &humi,&temp,&ppm,&co,&crc);
+    sscanf(buffer, "ID:%hhu RW:%hhu HUMI:%hhu TEMP:%hhu PPM:%hu CO:%hu \n\r", &LoRaRx1.id, &LoRaRx1.rw, &LoRaRx1.d_humi,&LoRaRx1.d_temp,&LoRaRx1.d_ppm,&LoRaRx1.d_co);
 
     // In ra kết quả
     // In ra kết quả
         Serial.print("Received: ");
         Serial.println(buffer);  // In ra chuỗi đã nhận
-    if(id == ID_STM32_1){
+    if(LoRaRx1.id == ID_STM32_1){
       Serial.print("Dung ID STM32 1");
-      if(rw == 1){
+      if(LoRaRx1.rw == 1){
         Serial.print("STM32 gui toi ESP voi quyen la gui");
         Serial.print("Received: ");
         Serial.println(buffer);  // In ra chuỗi đã nhận
         Serial.print("ID: ");
-        Serial.println(id);      // In ra ID
+        Serial.println(LoRaRx1.id);      // In ra ID
         Serial.print("RW: ");
-        Serial.println(rw);      // In ra RW
+        Serial.println(LoRaRx1.rw);      // In ra RW
         Serial.print("HUMI: ");
-        Serial.println(humi);    // In ra độ ẩm
+        Serial.println(LoRaRx1.d_humi);    // In ra độ ẩm
         Serial.print("TEMP: ");
-        Serial.println(temp);    // In ra nhiệt độ
+        Serial.println(LoRaRx1.d_temp);    // In ra nhiệt độ
         Serial.print("PPM: ");
-        Serial.println(ppm);     // In ra PPM
+        Serial.println(LoRaRx1.d_ppm);     // In ra PPM
         Serial.print("CO: ");
-        Serial.println(co);      // In ra CO
+        Serial.println(LoRaRx1.d_co);      // In ra CO
         Serial.print("\n");
-        firebase.setInt("/STM32_1/CO", co);
-        firebase.setInt("/STM32_1/HUMI", humi);
-        firebase.setInt("/STM32_1/PPM", ppm);
-        firebase.setInt("/STM32_1/TEMP", temp);
+        firebase.setInt("/STM32_1/CO", LoRaRx1.d_co);
+        firebase.setInt("/STM32_1/HUMI", LoRaRx1.d_humi);
+        firebase.setInt("/STM32_1/PPM", LoRaRx1.d_ppm);
+        firebase.setInt("/STM32_1/TEMP", LoRaRx1.d_temp);
         Serial.println("Da Gui Len FireBase xong");
       }else{
         Serial.print("STM32 gui toi ESP voi quyen la nhan");
         //TODO
       }
     }
+    UpdateTFT(&LoRaRx1, &LoRaRx2);
+
     // LoRaTx.id = id;
     // LoRaTx.rw = rw;
     // LoRaTx.d_temp = temp;
@@ -243,7 +313,13 @@ if (Serial2.available()) {
     // LoRaTx.d_co = co;
     // LoRa_SendFrame(0x04,1,&LoRaTx);
 }
-  if(millis() - tick >= 5000){
+  if(millis() - tick >= 1000){
+    // LoRa_SendFrame(ID_ESP,1,&LoRaTx);
+    Serial2.write(ID_ESP);
+    Serial.println("DA GUI XUONG STM32 1");
+    tick = millis();
+  }
+  if(millis() - tick >= 1200){
     // LoRa_SendFrame(ID_ESP,1,&LoRaTx);
     Serial2.write(ID_ESP);
     Serial.println("DA GUI XUONG STM32 1");
