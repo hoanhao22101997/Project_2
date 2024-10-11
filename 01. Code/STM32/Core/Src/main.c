@@ -131,44 +131,31 @@ LoRaFrame LoRaTx;
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	if (huart->Instance == USART1) {
-		// Kiểm tra ký tự nhận được
-		if (rx_data[0] == ID_ESP) {
-			flat = 1;
-		}
-		if (rx_data[0] != '\r')  // So sánh ký tự
-				{
-			buffer[index_buffer++] = rx_data[0];  // Lưu vào buffer
-		} else {
-			if (buffer[3] == ID_ESP) {
+		if(rx_data[0] == '\n'){
+			uint8_t test = 0;
+			sscanf(buffer,"{\"ID\": %hhu}",&test);
+			if(test == ID_STM32_1){
 				flat = 1;
 			}
-			// Phân tích dữ liệu vào khung LoRaRx
-////			LoRaRx.id = buffer[0];  // ID là byte đầu tiên
-////			LoRaRx.rw = buffer[1];  // RW là byte thứ hai
-//			memcpy(LoRaRx.data, &buffer[2], index_buffer - 1); // Copy dữ liệu chuỗi (b�? ID và RW)
-//			int test = CalculateCRC(&LoRaRx, index_buffer - 1);
-//			LoRaRx.data[index_buffer - 3] = '\0'; // Kết thúc chuỗi data trong LoRaRx
-//
-////            uint8_t test = CalculateCRC(&LoRaRx.data,index_buffer - 2);
-//			if (LoRaRx.crc == test) {
-//				int a = 1;
-//			}
-			// Xử lý dữ liệu đã nhận, hoặc g�?i hàm xử lý tại đây
-			memset(buffer, '\0', sizeof(buffer));
-
-			index_buffer = 0;  // Reset lại chỉ số buffer để nhận tiếp
+			for(int i = 0;i<index_buffer;i++){
+				buffer[i] = '\0';
+			}
+			index_buffer = 0;
+		}else{
+			buffer[index_buffer++] = rx_data[0];
 		}
 
-		// Kích hoạt lại ngắt UART để nhận byte tiếp theo
-		HAL_UART_Receive_IT(&huart1, rx_data, 1);
+		HAL_UART_Receive_IT(&huart1, (uint8_t*) rx_data, 1);
 	}
 }
 
 // Hàm gửi khung dữ liệu (chuỗi) qua UART cho LoRa E32
 void LoRa_SendFrame(LoRaFrame *data) {
 	char buf[258];
-	sprintf(buf, "ID:%u RW:%u HUMI:%u TEMP:%u PPM:%Lu CO:%Lu \n\r", data->id,
-			data->rw, data->d_humi, data->d_temp, data->d_ppm, data->d_co);
+	sprintf(buf,
+			"{\"ID\": %u, \"RW\": %u, \"HUMI\": %u, \"TEMP\": %u, \"PPM\": %Lu, \"CO\": %Lu}\n\r",
+			data->id, data->rw, data->d_humi, data->d_temp, data->d_ppm,
+			data->d_co);
 	// Gửi khung dữ liệu qua UART
 	HAL_UART_Transmit(&huart1, (uint8_t*) buf, strlen(buf), 100);
 }
@@ -214,9 +201,10 @@ void UpdateSensorData(dht11_t *pdht, Peripheral_t *pPeripheralData) {
 	pPeripheralData->sensorvalue = analogRead(&hadc1);
 	pPeripheralData->voltage = pPeripheralData->sensorvalue * (5 / 4095.0);
 	pPeripheralData->rs = (5 - pPeripheralData->voltage)
-			/ PeripheralData.voltage* RL;
+			/ PeripheralData.voltage * RL;
 	pPeripheralData->ratio = pPeripheralData->rs / R0;
-	pPeripheralData->ppm = 116.6020682 * pow(pPeripheralData->ratio, -2.769034857);
+	pPeripheralData->ppm = 116.6020682
+			* pow(pPeripheralData->ratio, -2.769034857);
 }
 void LoRa_UpdateFrame(LoRaFrame *pLoRaFrame, uint8_t id, uint8_t rw,
 		Peripheral_t *pPeripheralData) {
@@ -287,10 +275,10 @@ int main(void) {
 	uint16_t current_tick = 0;
 	while (1) {
 		current_tick = HAL_GetTick();
-		if (current_tick) - tick >= 10) {
+		if (current_tick - tick >= 10) {
 			UpdateSensorData(&dht, &PeripheralData);
 			UpdateOled(&PeripheralData);
-			tick = current_tick();
+			tick = current_tick;
 		}
 
 		if (flat == 1) {
@@ -298,12 +286,15 @@ int main(void) {
 			LoRa_SendFrame(&LoRaTx);
 			flat = 0;
 		}
-		if(PeripheralData.dht.temperature >= TEMPERATURE_WARNING && TriggerPwm == PWM_FLASE){
+		if (PeripheralData.dht.temperature >= TEMPERATURE_WARNING
+				&& TriggerPwm == PWM_FLASE) {
 			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 900);
 			TriggerPwm = PWM_TRUE;
-		}else if (PeripheralData.dht.temperature < TEMPERATURE_WARNING && TriggerPwm == PWM_TRUE){
+		} else if (PeripheralData.dht.temperature < TEMPERATURE_WARNING
+				&& TriggerPwm == PWM_TRUE) {
 			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 200);
-		}else;
+		} else
+			;
 		/* USER CODE END WHIL  */
 
 		/* USER CODE BEGIN 3 */

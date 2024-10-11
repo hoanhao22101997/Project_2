@@ -1,9 +1,13 @@
 #include <WiFi.h>
 #include <ESP32Firebase.h>
-#include <HTTPClient.h>
+// #include <HTTPClient.h>
+#include <PubSubClient.h>
+#include <WiFiClientSecure.h>
+
 #include  <Adafruit_ST7735.h>
 #include  <Adafruit_GFX.h>
 #include  <SPI.h>
+#include "ArduinoJson.h"
 const unsigned char uteute_min [] PROGMEM = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -67,10 +71,19 @@ Adafruit_ST7735 tft = Adafruit_ST7735(Pin_LCD_CS, Pin_LCD_RS, Pin_LCD_SDA, Pin_L
 const char* ssid = "PQ";              // Tên mạng WiFi của bạn
 const char* password = "99999999";    // Mật khẩu mạng của bạn
 
-#define REFERENCE_URL "https://project2-ec524-default-rtdb.firebaseio.com/"  // URL tham chiếu Firebase của bạn
+const char* mqtt_server = "34f44a99a7284fa3955ec554253306f3.s1.eu.hivemq.cloud";
+const int mqtt_port = 8883;
+const char* mqtt_username = "phatquserver";  //User
+const char* mqtt_password = "123456789aA";   //Password
+WiFiClientSecure espClient;
+PubSubClient client(espClient);
+unsigned long lastMsg = 0;
+#define MSG_BUFFER_SIZE (50)
+char msg[MSG_BUFFER_SIZE];
+// #define REFERENCE_URL "https://project2-ec524-default-rtdb.firebaseio.com/"  // URL tham chiếu Firebase của bạn
 
-WiFiClient client;
-Firebase firebase(REFERENCE_URL);
+// WiFiClient client;
+// Firebase firebase(REFERENCE_URL);
 
 uint8_t id, rw, temp,humi,crc;
 uint16_t ppm,co;
@@ -93,33 +106,57 @@ LoRaFrame LoRaRx1;
 LoRaFrame LoRaRx2;
 
 LoRaFrame LoRaTx;;
-// uint8_t CalculateCRC(LoRaFrame *frame, uint16_t dataLength) {
-// 	uint8_t crc = 0;
-// 	crc ^= frame->id;
-// 	crc ^= frame->rw;
 
-// 	// Tính CRC cho từng byte trong chuỗi dữ liệu
-// 	for (uint16_t i = 0; i < dataLength; i++) {
-// 		crc ^= frame->data[i];
-// 	}
 
-// 	return crc;
-// }
+void setup_wifi() {
+  delay(10);
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  randomSeed(micros());
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    String clientID = "ESPClient-";
+    clientID += String(random(0xffff), HEX);
+    if (client.connect(clientID.c_str(), mqtt_username, mqtt_password)) {
+      Serial.println("connected");
+      client.subscribe("esp/client");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      delay(5000);
+    }
+  }
+}
+void callback(char* topic, byte* payload, unsigned int length) {
+  String incommingMessage = "";
+  for (int i = 0; i < length; i++) incommingMessage += (char)payload[i];
+  Serial.println("Massage arived [" + String(topic) + "]" + incommingMessage);
+}
+//-----Method for Publishing MQTT Messages---------
+void publishMessage(const char* topic, String payload, boolean retained) {
+  if (client.publish(topic, payload.c_str(), true))
+    Serial.println("Message published [" + String(topic) + "]: " + payload);
+}
 
 void LoRa_SendFrame(uint8_t id, uint8_t rw, LoRaFrame *data) {
-//	LoRaFrame frame;
-//	frame.id = data->id;            // ID 8-bit
-//	frame.rw = data->rw & 0x01;     // �?ảm bảo RW là 1 bit (0 hoặc 1)
-//	uint8_t end = sizeof(frame.data) - 1;
-//	frame.data[end] = '/0';
-//	uint8_t len = strlen(data);
-//	frame.crc = CalculateCRC(&frame, len);
 	char buf[258];
 	sprintf(buf, "ID:%u RW:%u HUMI:%u TEMP:%u PPM:%Lu CO:%Lu \n\r", data->id, data->rw,
 			data->d_humi, data->d_temp,data->d_ppm,data->d_co);
-	// Gửi khung dữ liệu qua UART
   Serial2.write(buf);
-	// HAL_UART_Transmit(&huart1, (uint8_t*) buf, strlen(buf), 100);
 }
 void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
   char buf_t1[50];
@@ -228,29 +265,13 @@ void setup() {
 
   tft.drawBitmap(0, 0, uteute_min, 56, 56, ST7735_WHITE);
   tft.drawBitmap(60, 0, feeefeee, 50, 50, ST7735_WHITE);
-
-  WiFi.mode(WIFI_STA);
-  WiFi.disconnect();
-  delay(1000);
-
-  Serial.println();
-  Serial.println();
-  Serial.print("Đang kết nối tới: ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, password);
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print("-");
-  }
-  Serial.println("");
-  Serial.println("Đã kết nối WiFi");
-  Serial.print("Địa chỉ IP: ");
-  Serial.print("http://");
-  Serial.print(WiFi.localIP());
-  Serial.println("/");
+  setup_wifi();
   // Khởi tạo UART2 với baud rate 9600 (dùng cho giao tiếp với thiết bị khác)
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);  // SERIAL_8N1: 8 bit dữ liệu, không chẵn lẻ, 1 bit stop
+
+  espClient.setInsecure();
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
 
   Serial.println("UART2 initialized on GPIO 16 (RX) and GPIO 17 (TX)");
   tick = millis();
@@ -258,6 +279,10 @@ void setup() {
 
 void loop() {
   // Kiểm tra nếu có dữ liệu từ UART2 (thiết bị kết nối)
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
 if (Serial2.available()) {
     String a;      // Khai báo biến kiểu String
     String b;      // Sử dụng String cho dữ liệu
@@ -266,63 +291,54 @@ if (Serial2.available()) {
     // Chuyển đổi String thành mảng ký tự để sử dụng trong sscanf
     char buffer[255];
     a.toCharArray(buffer, sizeof(buffer));  // Chuyển đổi thành mảng ký tự
-
-    // Cắt dữ liệu từ chuỗi
-    sscanf(buffer, "ID:%hhu RW:%hhu HUMI:%hhu TEMP:%hhu PPM:%hu CO:%hu \n\r", &LoRaRx1.id, &LoRaRx1.rw, &LoRaRx1.d_humi,&LoRaRx1.d_temp,&LoRaRx1.d_ppm,&LoRaRx1.d_co);
-
+    JsonDocument doc;
+    deserializeJson(doc, buffer);
+    LoRaRx1.id = doc["ID"];
+    LoRaRx1.rw = doc["RW"];
+    LoRaRx1.d_humi = doc["HUMI"];
+    LoRaRx1.d_temp = doc["TEMP"];
+    LoRaRx1.d_ppm  = doc["PPM"];
+    LoRaRx1.d_co   = doc["CO"];
     // In ra kết quả
     // In ra kết quả
-        Serial.print("Received: ");
-        Serial.println(buffer);  // In ra chuỗi đã nhận
+    Serial.print("Received: ");
+    Serial.println(buffer);  // In ra chuỗi đã nhận
     if(LoRaRx1.id == ID_STM32_1){
       Serial.print("Dung ID STM32 1");
       if(LoRaRx1.rw == 1){
         Serial.print("STM32 gui toi ESP voi quyen la gui");
         Serial.print("Received: ");
-        Serial.println(buffer);  // In ra chuỗi đã nhận
-        Serial.print("ID: ");
-        Serial.println(LoRaRx1.id);      // In ra ID
-        Serial.print("RW: ");
-        Serial.println(LoRaRx1.rw);      // In ra RW
-        Serial.print("HUMI: ");
-        Serial.println(LoRaRx1.d_humi);    // In ra độ ẩm
-        Serial.print("TEMP: ");
-        Serial.println(LoRaRx1.d_temp);    // In ra nhiệt độ
-        Serial.print("PPM: ");
-        Serial.println(LoRaRx1.d_ppm);     // In ra PPM
-        Serial.print("CO: ");
-        Serial.println(LoRaRx1.d_co);      // In ra CO
-        Serial.print("\n");
-        firebase.setInt("/STM32_1/CO", LoRaRx1.d_co);
-        firebase.setInt("/STM32_1/HUMI", LoRaRx1.d_humi);
-        firebase.setInt("/STM32_1/PPM", LoRaRx1.d_ppm);
-        firebase.setInt("/STM32_1/TEMP", LoRaRx1.d_temp);
-        Serial.println("Da Gui Len FireBase xong");
+        Serial.print("ID: "); Serial.println(LoRaRx1.id);
+        Serial.print("RW: "); Serial.println(LoRaRx1.rw);
+        Serial.print("HUMI: "); Serial.println(LoRaRx1.d_humi);
+        Serial.print("TEMP: "); Serial.println(LoRaRx1.d_temp);
+        Serial.print("PPM: "); Serial.println(LoRaRx1.d_ppm);
+        Serial.print("CO: "); Serial.println(LoRaRx1.d_co);
+        publishMessage("Data/ID_STM32_1", buffer, true);
+        Serial.println("Da Gui Len MQTT BROKER");
       }else{
         Serial.print("STM32 gui toi ESP voi quyen la nhan");
         //TODO
       }
     }
     UpdateTFT(&LoRaRx1, &LoRaRx2);
-
-    // LoRaTx.id = id;
-    // LoRaTx.rw = rw;
-    // LoRaTx.d_temp = temp;
-    // LoRaTx.d_humi = humi,
-    // LoRaTx.d_ppm = ppm;
-    // LoRaTx.d_co = co;
-    // LoRa_SendFrame(0x04,1,&LoRaTx);
 }
   if(millis() - tick >= 1000){
+	char buf[258];
+	sprintf(buf,
+			"{\"ID\": %u}\n",ID_STM32_1);
     // LoRa_SendFrame(ID_ESP,1,&LoRaTx);
-    Serial2.write(ID_ESP);
+    Serial2.print(buf);
     Serial.println("DA GUI XUONG STM32 1");
     tick = millis();
   }
   if(millis() - tick >= 1200){
+	char buf[258];
+	sprintf(buf,
+			"{\"ID\": %u}\n",ID_STM32_2);
     // LoRa_SendFrame(ID_ESP,1,&LoRaTx);
-    Serial2.write(ID_ESP);
-    Serial.println("DA GUI XUONG STM32 1");
+    Serial2.print(buf);
+    Serial.println("DA GUI XUONG STM32 2");
     tick = millis();
   }
   // Serial2.println("Hello World");
