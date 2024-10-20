@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Web Client</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+    <h1>MQTT Web Client</h1>
+    <div id="status"></div>
+    <div id="messages"></div>
+
+    <button id="fan1" onclick="toggleDevice('Fan', 1)">Fan Node 1: OFF</button>
+    <button id="fan2" onclick="toggleDevice('Fan', 2)">Fan Node 2: OFF</button>
+    <button id="light1" onclick="toggleDevice('Light', 1)">Light Node 1: OFF</button>
+    <button id="light2" onclick="toggleDevice('Light', 2)">Light Node 2: OFF</button>
+
+    <script>
+        const brokerUrl = 'wss://34f44a99a7284fa3955ec554253306f3.s1.eu.hivemq.cloud:8884/mqtt'; // Đường dẫn broker với SSL
+        const options = {
+            clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+            username: 'phatquserver', // Username của bạn
+            password: '123456789aA', // Mật khẩu của bạn
+            clean: true
+        };
+
+        const client = mqtt.connect(brokerUrl, options);
+        const deviceStates = {
+            Fan1: false,
+            Fan2: false,
+            Light1: false,
+            Light2: false
+        };
+
+        // Thay đổi trạng thái kết nối
+        client.on('connect', function () {
+            document.getElementById('status').innerHTML = 'Connected to MQTT broker';
+            client.subscribe('Data', function (err) {
+                if (!err) {
+                    console.log('Subscribed to topic!');
+                } else {
+                    console.error('Subscription error:', err);
+                }
+            });
+        });
+
+        // Xử lý tin nhắn đến
+        client.on('message', function (topic, message) {
+            document.getElementById('messages').innerHTML += `<p>Received message: ${message.toString()}</p>`;
+        });
+
+        // Xử lý lỗi
+        client.on('error', function (error) {
+            console.error('MQTT Error:', error);
+            document.getElementById('status').innerHTML = 'Error connecting to MQTT broker';
+        });
+
+        // Cố gắng tự động kết nối lại nếu kết nối bị mất
+        client.on('offline', function () {
+            console.log('Client is offline');
+            document.getElementById('status').innerHTML = 'Client is offline';
+        });
+
+        client.on('reconnect', function () {
+            console.log('Reconnecting...');
+            document.getElementById('status').innerHTML = 'Reconnecting...';
+        });
+
+        // Hàm gửi dữ liệu qua MQTT
+        function publishData(data) {
+            const topic = 'Control/Device'; // Đặt tên topic cho điều khiển thiết bị
+            client.publish(topic, JSON.stringify(data), { qos: 0 }, function (err) {
+                if (err) {
+                    console.error('Error publishing:', err);
+                } else {
+                    console.log('Data published to', topic);
+                }
+            });
+        }
+
+        // Hàm toggle thiết bị
+        function toggleDevice(device, node) {
+            const key = device === 'Fan' ? `Fan${node}` : `Light${node}`;
+            deviceStates[key] = !deviceStates[key]; // Đảo ngược trạng thái
+
+            const status = deviceStates[key] ? 'ON' : 'OFF'; // Tạo trạng thái mới
+            const data = {
+                [key]: status // Gửi JSON với trạng thái mới
+            };
+
+            publishData(data); // Gửi dữ liệu qua MQTT
+            document.getElementById(key.toLowerCase()).innerText = `${key} Node ${node}: ${status}`; // Cập nhật trạng thái nút
+        }
+    </script>
+</body>
+</html>

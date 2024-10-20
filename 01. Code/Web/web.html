@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Sensor Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #444;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0077ff, #00c6ff);
+            animation: fadeIn 1s;
+        }
+
+        .login-box {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .login-box:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #0077ff;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #0077ff;
+            outline: none;
+        }
+
+        button {
+            padding: 15px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: none;
+            background-color: #0077ff;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 119, 255, 0.5);
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            display: none;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+            flex-direction: column;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-start;
+            margin: 20px;
+        }
+
+        .nav button {
+            margin: 0 10px;
+            background-color: #0077ff;
+            transition: transform 0.3s;
+        }
+
+        .nav button:hover {
+            transform: scale(1.1);
+        }
+
+        .node {
+            display: none;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            padding: 20px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .node.active {
+            display: block;
+        }
+
+        .header {
+            border-top: 5px solid #0077ff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0077ff;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background: #0077ff;
+            margin: 5px auto;
+            transition: width 0.3s ease;
+        }
+
+        .header:hover::after {
+            width: 100%;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button.control {
+            margin: 5px;
+            background-color: #28a745;
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s;
+        }
+
+        button.control:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        canvas {
+            max-width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .about {
+            margin: 20px;
+            padding: 10px;
+            background-color: #e7f1ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in;
+        }
+    </style>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+
+    <h1>IoT Sensor Dashboard</h1>
+
+    <!-- Login Page -->
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="login()">Login</button>
+            <p id="login-error" style="color: red; display: none;">Invalid credentials!</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Content (Hidden initially) -->
+    <div class="container">
+        <div class="nav">
+            <button onclick="showNode('node1')">Node 1</button>
+            <button onclick="showNode('node2')">Node 2</button>
+            <button onclick="showAbout()">Về Chúng Tôi</button>
+        </div>
+
+        <div class="node" id="node1">
+            <div class="header">Node 1</div>
+            <div class="chart-container">
+                <canvas id="temperatureChart1"></canvas>
+                <canvas id="humidityChart1"></canvas>
+                <canvas id="airQualityChart1"></canvas>
+                <canvas id="coChart1"></canvas>
+            </div>
+         <div class="button-container">
+                <button class="control" onclick="controlDevice('LIGHT1', 1)">Light ON</button>
+                <button class="control" onclick="controlDevice('LIGHT1', 0)">Light OFF</button>
+                <button class="control" onclick="controlDevice('FAN1', 1)">Fan ON</button>
+                <button class="control" onclick="controlDevice('FAN1', 0)">Fan OFF</button>
+
+            </div>
+        </div>
+
+        <div class="node" id="node2">
+            <div class="header">Node 2</div>
+            <div class="chart-container">
+                <canvas id="temperatureChart2"></canvas>
+                <canvas id="humidityChart2"></canvas>
+                <canvas id="airQualityChart2"></canvas>
+                <canvas id="coChart2"></canvas>
+            </div>
+            <div class="button-container">
+                <button class="control" onclick="toggleDevice('LIGHT', 1)">Light Node 1: OFF</button>
+                <button class="control" onclick="toggleDevice('FAN', 1)">Fan1 Node 1: OFF</button>
+            </div>
+        </div>
+
+        <div class="about" id="about" style="display: none;">
+            <h2>Về Chúng Tôi</h2>
+            <p>Chúng tôi là một nhóm nghiên cứu về IoT, chuyên phát triển các giải pháp giám sát và điều khiển từ xa.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // MQTT setup
+        const brokerUrl = 'wss://34f44a99a7284fa3955ec554253306f3.s1.eu.hivemq.cloud:8884/mqtt';
+        const options = {
+            clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+            username: 'phatquserver', // Your username
+            password: '123456789aA', // Your password
+            clean: true,
+        };
+
+        const client = mqtt.connect(brokerUrl, options);
+
+        // Connect to the broker
+        client.on('connect', function () {
+            console.log('Connected to MQTT broker');
+            client.subscribe('Data', function (err) {
+                if (!err) {
+                    // console.log('Subscribed to Data');
+                }
+            });
+        });
+
+        // Handle incoming messages
+        let secondCounter = 0; // Biến đếm số giây
+
+client.on('message', function (topic, message) {
+    const data = JSON.parse(message.toString());
+    console.log(data); // In ra toàn bộ đối tượng data
+
+    // Truy xuất các giá trị từ đối tượng data
+    const id = data.ID;
+    const rw = data.RW;
+    const humidity = data.HUMI;
+    const temperature = data.TEMP;
+    const ppm = data.PPM;
+    const co = data.CO;
+    const rl1 = data.RL1;
+    const rl2 = data.RL2;
+
+    // Tăng biến đếm
+    secondCounter++;
+
+    // Sử dụng secondCounter làm timestamp
+    const timestamp = secondCounter; // Hiển thị số giây từ 0 trở đi
+
+    // In ra các giá trị đã cắt
+    console.log(`ID: ${id}`);
+    console.log(`RW: ${rw}`);
+    console.log(`Humidity: ${humidity}`);
+    console.log(`Temperature: ${temperature}`);
+    console.log(`PPM: ${ppm}`);
+    console.log(`CO: ${co}`);
+    console.log(`RL1: ${rl1}`);
+    console.log(`RL2: ${rl2}`);
+
+    // Gọi hàm updateCharts với các dữ liệu đã cắt
+    updateCharts(id, temperature, humidity, ppm, co, timestamp);
+});
+
+// Update charts with data
+function updateCharts(node, temperature, humidity, airQuality, co, timestamp) {
+    // Update each chart with the new data
+    if (node === 1) {
+        temperatureChart1.data.labels.push(timestamp);
+        temperatureChart1.data.datasets[0].data.push(temperature);
+        temperatureChart1.update();
+
+        humidityChart1.data.labels.push(timestamp);
+        humidityChart1.data.datasets[0].data.push(humidity);
+        humidityChart1.update();
+
+        airQualityChart1.data.labels.push(timestamp);
+        airQualityChart1.data.datasets[0].data.push(airQuality); // Nếu airQuality là một biến khác
+        airQualityChart1.update();
+
+        coChart1.data.labels.push(timestamp); // Sử dụng timestamp để biểu thị thời gian
+        coChart1.data.datasets[0].data.push(co);
+        coChart1.update();
+    } else if (node === 2) {
+        temperatureChart2.data.labels.push(timestamp);
+        temperatureChart2.data.datasets[0].data.push(temperature);
+        temperatureChart2.update();
+
+        humidityChart2.data.labels.push(timestamp);
+        humidityChart2.data.datasets[0].data.push(humidity);
+        humidityChart2.update();
+
+        airQualityChart2.data.labels.push(timestamp);
+        airQualityChart2.data.datasets[0].data.push(airQuality); // Nếu airQuality là một biến khác
+        airQualityChart2.update();
+
+        coChart2.data.labels.push(timestamp); // Sử dụng timestamp để biểu thị thời gian
+        coChart2.data.datasets[0].data.push(co);
+        coChart2.update();
+    }
+}
+
+
+
+        // Chart configurations
+        const temperatureChart1 = new Chart(document.getElementById('temperatureChart1').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Nhiệt độ (°C)',
+                    data: [],
+                    borderColor: '#ff6384',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const humidityChart1 = new Chart(document.getElementById('humidityChart1').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Độ ẩm (%)',
+                    data: [],
+                    borderColor: '#36a2eb',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const airQualityChart1 = new Chart(document.getElementById('airQualityChart1').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Chất lượng không khí (PPM)',
+                    data: [],
+                    borderColor: '#ffce56',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const coChart1 = new Chart(document.getElementById('coChart1').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Nồng độ CO (PPM)',
+                    data: [],
+                    borderColor: '#4bc0c0',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const temperatureChart2 = new Chart(document.getElementById('temperatureChart2').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Nhiệt độ (°C)',
+                    data: [],
+                    borderColor: '#ff6384',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const humidityChart2 = new Chart(document.getElementById('humidityChart2').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Độ ẩm (%)',
+                    data: [],
+                    borderColor: '#36a2eb',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const airQualityChart2 = new Chart(document.getElementById('airQualityChart2').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Chất lượng không khí (PPM)',
+                    data: [],
+                    borderColor: '#ffce56',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const coChart2 = new Chart(document.getElementById('coChart2').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Nồng độ CO (PPM)',
+                    data: [],
+                    borderColor: '#4bc0c0',
+                    borderWidth: 2,
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Show node function
+        function showNode(nodeId) {
+            document.querySelectorAll('.node').forEach(node => {
+                node.classList.remove('active');
+            });
+            document.getElementById(nodeId).classList.add('active');
+        }
+
+        // Control device function
+        function controlDevice(device, node) {
+            // Here you can implement the logic to control devices
+            alert(`Controlling ${device} for Node ${node}`);
+        }
+
+        // About section
+        function showAbout() {
+            document.querySelectorAll('.node').forEach(node => {
+                node.classList.remove('active');
+            });
+            document.getElementById('about').style.display = 'block';
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Dummy login check
+            if (username === 'admin' && password === 'admin') {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.container').style.display = 'flex';
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+        function publishData(data) {
+            const topic = 'Data/input'; // Đặt tên topic cho điều khiển thiết bị
+            client.publish(topic, JSON.stringify(data), { qos: 0 }, function (err) {
+                if (err) {
+                    console.error('Error publishing:', err);
+                } else {
+                    console.log('Data published to', topic);
+                }
+            });
+        }
+        let fan1State = false; // Trạng thái của quạt 1
+
+function controlDevice(device, status) {
+    let topic = 'Data/input'; // Đặt topic mặc định
+    let message = {}; // Biến message để lưu thông điệp
+
+    if (device === 'LIGHT1') {
+        if(status == 1){
+            message = { "LIGHT1": "ON" }; // Thông điệp cho đèn LIGHT1
+        }else{
+            message = { "LIGHT1": "OFF" }; // Thông điệp cho đèn LIGHT1
+        }
+    } else if (device === 'FAN1') {
+        if(status == 1){
+            message = { "FAN1": "ON" }; // Thông điệp cho đèn LIGHT1
+        }else{
+            message = { "FAN1": "OFF" }; // Thông điệp cho đèn LIGHT1
+        }
+    }
+
+    // Gửi thông điệp dưới dạng JSON
+    client.publish(topic, JSON.stringify(message));
+    // alert(`${device.charAt(0).toUpperCase() + device.slice(1)} của Node ${node} đã được gửi: ${JSON.stringify(message)}`);
+}
+
+
+
+    </script>
+</body>
+</html>

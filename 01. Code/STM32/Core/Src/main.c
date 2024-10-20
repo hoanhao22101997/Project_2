@@ -57,6 +57,8 @@ ADC_HandleTypeDef hadc2;
 
 I2C_HandleTypeDef hi2c1;
 
+IWDG_HandleTypeDef hiwdg;
+
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -79,6 +81,7 @@ static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_IWDG_Init(void);
 /* USER CODE BEGIN PFP */
 
 //uint16_t adc_read(ADC_HandleTypeDef *Adc_x){
@@ -126,22 +129,34 @@ typedef struct {
 	uint16_t d_co;
 	uint8_t crc;       // CRC 8 bit dùng để kiểm tra lỗi
 	uint8_t endframe;
+	uint8_t RL1;
+	uint8_t RL2;
 } LoRaFrame;
 LoRaFrame LoRaTx;
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	if (huart->Instance == USART1) {
-		if(rx_data[0] == '\n'){
-			uint8_t test = 0;
-			sscanf(buffer,"{\"ID\": %hhu}",&test);
-			if(test == ID_STM32_1){
-				flat = 1;
+		if (rx_data[0] == '\n') {
+			if (strstr(buffer, "ID")) {
+				uint8_t test = 0;
+				uint8_t temp1 = 0;
+				uint8_t temp2 = 0;
+				sscanf(buffer, "{\"ID\": %hhu}", &test, &temp1, &temp2);
+				if (test == ID_STM32_1) {
+					flat = 1;
+				}
 			}
-			for(int i = 0;i<index_buffer;i++){
+			if(strstr(buffer,"FAN1")){
+				flat = 2;
+			}
+			if(strstr(buffer,"LIGHT1")){
+				flat = 3;
+			}
+			for (int i = 0; i < index_buffer; i++) {
 				buffer[i] = '\0';
 			}
 			index_buffer = 0;
-		}else{
+		} else {
 			buffer[index_buffer++] = rx_data[0];
 		}
 
@@ -153,9 +168,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 void LoRa_SendFrame(LoRaFrame *data) {
 	char buf[258];
 	sprintf(buf,
-			"{\"ID\": %u, \"RW\": %u, \"HUMI\": %u, \"TEMP\": %u, \"PPM\": %Lu, \"CO\": %Lu}\n\r",
+			"{\"ID\": %u, \"RW\": %u, \"HUMI\": %u, \"TEMP\": %u, \"PPM\": %Lu, \"CO\": %Lu, \"RL1\": %u, \"RL2\": %u}\n\r",
 			data->id, data->rw, data->d_humi, data->d_temp, data->d_ppm,
-			data->d_co);
+			data->d_co, data->RL1, data->RL2);
 	// Gửi khung dữ liệu qua UART
 	HAL_UART_Transmit(&huart1, (uint8_t*) buf, strlen(buf), 100);
 }
@@ -259,7 +274,9 @@ int main(void) {
 	MX_ADC2_Init();
 	MX_USART1_UART_Init();
 	MX_I2C1_Init();
+//	MX_IWDG_Init();
 	/* USER CODE BEGIN 2 */
+//	HAL_IWDG_Init(&hiwdg);
 	HAL_TIM_Base_Start(&htim4);
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
@@ -272,30 +289,46 @@ int main(void) {
 	HAL_UART_Receive_IT(&huart1, (uint8_t*) rx_data, 1);
 
 	uint16_t tick = HAL_GetTick();
-	uint16_t current_tick = 0;
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+	LoRaTx.RL1 = 1;
+	LoRaTx.RL2 = 1;
+	/* USER CODE END 2 */
+
+	/* Infinite loop */
+	/* USER CODE BEGIN WHILE */
 	while (1) {
-		current_tick = HAL_GetTick();
-		if (current_tick - tick >= 10) {
+//		HAL_IWDG_Refresh(&hiwdg);
+		if (HAL_GetTick() - tick >= 150) {
 			UpdateSensorData(&dht, &PeripheralData);
 			UpdateOled(&PeripheralData);
-			tick = current_tick;
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, LoRaTx.RL1);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, LoRaTx.RL2);
+			tick = HAL_GetTick();
 		}
-
 		if (flat == 1) {
 			LoRa_UpdateFrame(&LoRaTx, ID_STM32_1, WRITE, &PeripheralData);
 			LoRa_SendFrame(&LoRaTx);
 			flat = 0;
+		}else if(flat == 2){
+			LoRaTx.RL1 = !LoRaTx.RL1;
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, LoRaTx.RL1);
+			flat = 0;
+		}else if(flat == 3){
+			LoRaTx.RL2 = !LoRaTx.RL2;
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, LoRaTx.RL2);
+			flat = 0;
 		}
-		if (PeripheralData.dht.temperature >= TEMPERATURE_WARNING
-				&& TriggerPwm == PWM_FLASE) {
-			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 900);
-			TriggerPwm = PWM_TRUE;
-		} else if (PeripheralData.dht.temperature < TEMPERATURE_WARNING
-				&& TriggerPwm == PWM_TRUE) {
-			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 200);
-		} else
-			;
-		/* USER CODE END WHIL  */
+//		if (PeripheralData.dht.temperature >= TEMPERATURE_WARNING
+//				&& TriggerPwm == PWM_FLASE) {
+//			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 900);
+//			TriggerPwm = PWM_TRUE;
+//		} else if (PeripheralData.dht.temperature < TEMPERATURE_WARNING
+//				&& TriggerPwm == PWM_TRUE) {
+//			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 200);
+//		} else
+//			;
+		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
 	}
@@ -314,9 +347,11 @@ void SystemClock_Config(void) {
 	/** Initializes the RCC Oscillators according to the specified parameters
 	 * in the RCC_OscInitTypeDef structure.
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI
+			| RCC_OSCILLATORTYPE_LSI;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+	RCC_OscInitStruct.LSIState = RCC_LSI_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
@@ -458,6 +493,32 @@ static void MX_I2C1_Init(void) {
 	/* USER CODE BEGIN I2C1_Init 2 */
 
 	/* USER CODE END I2C1_Init 2 */
+
+}
+
+/**
+ * @brief IWDG Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_IWDG_Init(void) {
+
+	/* USER CODE BEGIN IWDG_Init 0 */
+
+	/* USER CODE END IWDG_Init 0 */
+
+	/* USER CODE BEGIN IWDG_Init 1 */
+
+	/* USER CODE END IWDG_Init 1 */
+	hiwdg.Instance = IWDG;
+	hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
+	hiwdg.Init.Reload = 4095;
+	if (HAL_IWDG_Init(&hiwdg) != HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN IWDG_Init 2 */
+
+	/* USER CODE END IWDG_Init 2 */
 
 }
 
@@ -695,6 +756,9 @@ static void MX_GPIO_Init(void) {
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOA, DHT11_PIN_Pin | DHT_Pin, GPIO_PIN_RESET);
 
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_RESET);
+
 	/*Configure GPIO pins : PC13 PC15 */
 	GPIO_InitStruct.Pin = GPIO_PIN_13 | GPIO_PIN_15;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -708,6 +772,13 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : PB4 PB5 */
+	GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/* USER CODE BEGIN MX_GPIO_Init_2 */
 	/* USER CODE END MX_GPIO_Init_2 */
