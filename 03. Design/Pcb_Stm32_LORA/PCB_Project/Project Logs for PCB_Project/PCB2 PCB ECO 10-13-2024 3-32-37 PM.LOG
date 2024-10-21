@@ -1,0 +1,26 @@
+Removed Pin From Net: NetName=+5 Pin=L1-1
+Removed Pin From Net: NetName=GND Pin=L1-2
+Removed Pin From Net: NetName=+5 Pin=R1-2
+Removed Pin From Net: NetName=GND Pin=SW1-1
+Removed Member From Class: ClassName=Schematic Member=L1
+Added Component: Designator=JP2(JP 1x2 CC)
+Add component (AddParameter): Name = "Chung_Loai"; Value = "C?m"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Don_Vi"; Value = "Con"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ghi_Chu"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Kieu_Chan"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ma_Hang"; Value = "MH001265"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ten_Linh_Kien"; Value = "Jump Ðon Cái 2.54MM 1x40P Cong"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=R1-1
+Added Pin To Net: NetName=+5 Pin=STM1-18
+Added Pin To Net: NetName=+5 Pin=SW1-2
+Added Pin To Net: NetName=NetJP2_1 Pin=JP2-1
+Added Pin To Net: NetName=NetJP2_1 Pin=STM1-24
+Added Net: Name=NetJP2_1
+Added Pin To Net: NetName=NetJP2_2 Pin=JP2-2
+Added Pin To Net: NetName=NetJP2_2 Pin=STM1-23
+Added Net: Name=NetJP2_2
+Added Pin To Net: NetName=NetR1_2 Pin=R1-2
+Added Pin To Net: NetName=NetR1_2 Pin=SW1-1
+Added Net: Name=NetR1_2
+Added Member To Class: ClassName=Schematic Member=Component JP2 JP 1x2 2.54
+Added Member To Class: ClassName=Schematic Member=Component MQ1 MQ7

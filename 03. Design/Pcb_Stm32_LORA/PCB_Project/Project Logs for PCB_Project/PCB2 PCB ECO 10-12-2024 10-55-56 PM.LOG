@@ -1,0 +1,30 @@
+Removed Pin From Net: NetName=NetLORA AS1_1 Pin=MQ3-1
+Removed Pin From Net: NetName=+5 Pin=MQ3-4
+Removed Member From Class: ClassName=Schematic Member=MQ3
+Change Component Designator: OldDesignator=R3 NewDesignator=R1
+Change Component Designator: OldDesignator=R5 NewDesignator=R2
+Change Component Designator: OldDesignator=R6 NewDesignator=R3
+Change Component Designator: OldDesignator=R7 NewDesignator=R4
+Change Component Designator: OldDesignator=R8 NewDesignator=R5
+Added Component: Designator=JP1(JP 1x4 CC)
+Add component (AddParameter): Name = "Chung_Loai"; Value = "C?m"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Don_Vi"; Value = "Con"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ghi_Chu"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Kieu_Chan"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ma_Hang"; Value = "MH001265"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ten_Linh_Kien"; Value = "Jump Ðon Cái 2.54MM 1x40P Cong"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetLORA AS1_1 Pin=JP1-1
+Added Pin To Net: NetName=+5 Pin=JP1-4
+Change Net Name : Old Net Name=NetLORA AS1_1 New Net Name=NetJP1_1
+Change Net Name : Old Net Name=NetR3_1 New Net Name=NetR1_1
+Change Net Name : Old Net Name=NetR7_1 New Net Name=NetR4_1
+Change Net Name : Old Net Name=NetR8_1 New Net Name=NetR5_1
+Added Pin To Net: NetName=NetJP1_2 Pin=JP1-2
+Added Pin To Net: NetName=NetJP1_2 Pin=Q1-2
+Added Pin To Net: NetName=NetJP1_2 Pin=R2-1
+Added Net: Name=NetJP1_2
+Added Pin To Net: NetName=NetJP1_3 Pin=JP1-3
+Added Pin To Net: NetName=NetJP1_3 Pin=Q2-2
+Added Pin To Net: NetName=NetJP1_3 Pin=R3-1
+Added Net: Name=NetJP1_3
+Added Member To Class: ClassName=Schematic Member=Component JP1 JP 1x4 2.54

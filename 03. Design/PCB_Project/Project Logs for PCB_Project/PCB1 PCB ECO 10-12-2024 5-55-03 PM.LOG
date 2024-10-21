@@ -1,0 +1,36 @@
+Change Component Designator: OldDesignator=C? NewDesignator=LORA AS32
+Added Pin To Net: NetName=NetC?_1 Pin=LORA AS32-7
+Added Pin To Net: NetName=NetC?_1 Pin=TFT-10
+Change Net Name : Old Net Name=NetC?_1 New Net Name=NetLORA AS32_1
+Added Pin To Net: NetName=NetC?_1 Pin=C?-1
+Added Pin To Net: NetName=NetC?_1 Pin=IC?-1
+Added Pin To Net: NetName=NetC?_1 Pin=JP1-2
+Added Net: Name=NetC?_1
+Added Pin To Net: NetName=NetLORA AS32_3 Pin=LORA AS32-3
+Added Pin To Net: NetName=NetLORA AS32_3 Pin=U?-J3-11
+Added Net: Name=NetLORA AS32_3
+Added Pin To Net: NetName=NetLORA AS32_4 Pin=LORA AS32-4
+Added Pin To Net: NetName=NetLORA AS32_4 Pin=U?-J3-12
+Added Net: Name=NetLORA AS32_4
+Added Pin To Net: NetName=NetLORA AS32_6 Pin=LORA AS32-6
+Added Pin To Net: NetName=NetLORA AS32_6 Pin=TFT-11
+Added Pin To Net: NetName=NetLORA AS32_6 Pin=U?-J2-1
+Added Net: Name=NetLORA AS32_6
+Added Pin To Net: NetName=NetTFT_1 Pin=TFT-1
+Added Pin To Net: NetName=NetTFT_1 Pin=U?-J2-11
+Added Net: Name=NetTFT_1
+Added Pin To Net: NetName=NetTFT_2 Pin=TFT-2
+Added Pin To Net: NetName=NetTFT_2 Pin=U?-J3-3
+Added Net: Name=NetTFT_2
+Added Pin To Net: NetName=NetTFT_3 Pin=TFT-3
+Added Pin To Net: NetName=NetTFT_3 Pin=U?-J3-2
+Added Net: Name=NetTFT_3
+Added Pin To Net: NetName=NetTFT_4 Pin=TFT-4
+Added Pin To Net: NetName=NetTFT_4 Pin=U?-J2-15
+Added Net: Name=NetTFT_4
+Added Pin To Net: NetName=NetTFT_5 Pin=TFT-5
+Added Pin To Net: NetName=NetTFT_5 Pin=U?-J2-12
+Added Net: Name=NetTFT_5
+Added Member To Class: ClassName=Project2 Member=Component C? 100uF
+Added Member To Class: ClassName=Project2 Member=Component LORA AS32 JP7
+Added Member To Class: ClassName=Project2 Member=Component U? ESP32-DEVKITC-32D

@@ -149,6 +149,7 @@ uint16_t ppm,co;
 #define ID_STM32_1 0x01
 #define ID_STM32_2 0x02
 int tick =0;
+int tick1 = 0;
 typedef struct {
 	uint8_t id;        // ID 8 bit
 	uint8_t rw;        // Read (0) hoặc Write (1) 1 bit
@@ -228,6 +229,17 @@ void setupTFT(){
   String newCoText2 = "OFF"; 
   tft.print(newCoText2);   
  
+  tft.setCursor(114, 101);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  String newCoText3 = "OFF";
+  tft.print(newCoText1);   
+
+  tft.setCursor(114, 115);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  String newCoText = "OFF"; 
+  tft.print(newCoText2);  
 }
 void setup_wifi() {
   delay(10);
@@ -275,11 +287,20 @@ void callback(char* topic, byte* payload, unsigned int length) {
     if(strstr(incommingMessage.c_str(), "ON")) {
       sprintf(buf, "{\"FAN1\": %u}\n", 1);
       Serial2.print(buf);
-      flat = 1;
     } else {
       sprintf(buf, "{\"FAN1\": %u}\n", 0);
       Serial2.print(buf);  
-      flat = 2;
+    }
+  }
+  if(strstr(incommingMessage.c_str(), "FAN2")) {
+
+    char buf[258];
+    if(strstr(incommingMessage.c_str(), "ON")) {
+      sprintf(buf, "{\"FAN2\": %u}\n", 1);
+      Serial2.print(buf);
+    } else {
+      sprintf(buf, "{\"FAN2\": %u}\n", 0);
+      Serial2.print(buf);  
     }
   }
   if(strstr(incommingMessage.c_str(), "LIGHT1")) {
@@ -287,11 +308,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
     if(strstr(incommingMessage.c_str(), "ON")) {
       sprintf(buf, "{\"LIGHT1\": %u}\n", 1);
       Serial2.print(buf);
-      flat = 3;
     } else {
       sprintf(buf, "{\"LIGHT1\": %u}\n", 0);
       Serial2.print(buf);      
-      flat = 4;
+    }
+  }
+  if(strstr(incommingMessage.c_str(), "LIGHT2")) {
+    char buf[258];
+    if(strstr(incommingMessage.c_str(), "ON")) {
+      sprintf(buf, "{\"LIGHT2\": %u}\n", 1);
+      Serial2.print(buf);
+    } else {
+      sprintf(buf, "{\"LIGHT2\": %u}\n", 0);
+      Serial2.print(buf);      
     }
   }
 }
@@ -318,6 +347,14 @@ void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
   String newTempText = String(pLoraFrame1->d_temp);
   tft.print(newTempText);
 
+  tft.fillRect(114,45, 30, 8, ST7735_BLACK);  // Tăng kích thước vùng xóa
+  
+  tft.setCursor(114, 45);
+  tft.setTextColor(ST7735_WHITE);  
+  tft.setTextSize(1);
+  String newTempText1 = String(pLoraFrame2->d_temp);
+  tft.print(newTempText1);
+
   // Xóa độ ẩm cũ
   tft.fillRect(54, 59, 30, 8, ST7735_BLACK);
   // In số mới với màu trắng
@@ -326,6 +363,14 @@ void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
   tft.setTextSize(1);
   String newHumiText = String(pLoraFrame1->d_humi);
   tft.print(newHumiText);
+
+  tft.fillRect(114, 59, 30, 8, ST7735_BLACK);
+  // In số mới với màu trắng
+  tft.setCursor(114, 59);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  String newHumiText1 = String(pLoraFrame2->d_humi);
+  tft.print(newHumiText1);
 
   // Xóa nồng độ PPM cũ
   tft.fillRect(54, 73, 30, 8, ST7735_BLACK);
@@ -336,6 +381,15 @@ void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
   String newPpmText = String(pLoraFrame1->d_ppm);
   tft.print(newPpmText);
 
+  tft.fillRect(114, 73, 30, 8, ST7735_BLACK);
+  // In số mới với màu trắng
+  tft.setCursor(114, 73);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  String newPpmText1 = String(pLoraFrame2->d_ppm);
+  tft.print(newPpmText1);
+
+
   // Xóa nồng độ CO cũ
   tft.fillRect(54, 87, 30, 8, ST7735_BLACK);
   // In số mới với màu trắng
@@ -345,12 +399,30 @@ void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
   String newCoText = String(pLoraFrame1->d_co);
   tft.print(newCoText);
 
+  tft.fillRect(114, 87, 30, 8, ST7735_BLACK);
+  // In số mới với màu trắng
+  tft.setCursor(114, 87);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  String newCoText1 = String(pLoraFrame2->d_co);
+  tft.print(newCoText1);
+
   // RL1 trạng thái quạt
   tft.fillRect(54, 101, 30, 8, ST7735_BLACK);
   tft.setCursor(54, 101);
   tft.setTextColor(ST7735_WHITE);
   tft.setTextSize(1);
   if (pLoraFrame1->RL1 == 0) {
+      tft.print("ON"); 
+  } else {
+      tft.print("OFF");
+  }
+
+  tft.fillRect(114, 101, 30, 8, ST7735_BLACK);
+  tft.setCursor(114, 101);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  if (pLoraFrame2->RL1 == 0) {
       tft.print("ON"); 
   } else {
       tft.print("OFF");
@@ -366,8 +438,19 @@ void UpdateTFT(LoRaFrame *pLoraFrame1, LoRaFrame *pLoraFrame2) {
   } else {
       tft.print("OFF");
   }
-}
 
+  tft.fillRect(114, 115, 30, 8, ST7735_BLACK);
+  tft.setCursor(114, 115);
+  tft.setTextColor(ST7735_WHITE);
+  tft.setTextSize(1);
+  if (pLoraFrame2->RL2 == 0) {
+      tft.print("ON"); 
+  } else {
+      tft.print("OFF");
+  }
+
+}
+uint8_t flat1 = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -379,99 +462,72 @@ void setup() {
   client.setCallback(callback);
   Serial.println("UART2 initialized on GPIO 16 (RX) and GPIO 17 (TX)");
   tick = millis();
+  tick1 = millis();
 }
-
 void loop() {
-  // Kiểm tra nếu có dữ liệu từ UART2 (thiết bị kết nối)
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
-if (Serial2.available()) {
-    String a;      // Khai báo biến kiểu String
-    String b;      // Sử dụng String cho dữ liệu
-    a = Serial2.readStringUntil('\r');  // Đọc dữ liệu từ Serial2 cho đến khi gặp '\r'
 
-    // Chuyển đổi String thành mảng ký tự để sử dụng trong sscanf
-    char buffer[512];
-    a.toCharArray(buffer, sizeof(buffer));  // Chuyển đổi thành mảng ký tự
-    JsonDocument doc;
-    deserializeJson(doc, buffer);
-    LoRaRx1.id = doc["ID"];
-    LoRaRx1.rw = doc["RW"];
-    LoRaRx1.d_humi = doc["HUMI"];
-    LoRaRx1.d_temp = doc["TEMP"];
-    LoRaRx1.d_ppm  = doc["PPM"];
-    LoRaRx1.d_co   = doc["CO"];
-    LoRaRx1.RL1    = doc["RL1"];
-    LoRaRx1.RL2    = doc["RL2"];
-    // In ra kết quả
-    // In ra kết quả
-    // Serial.print("Received: ");
-    // Serial.println(buffer);  // In ra chuỗi đã nhận
-    if(LoRaRx1.id == ID_STM32_1){
-      // Serial.print("Dung ID STM32 1");
-      if(LoRaRx1.rw == 1){
-        // Serial.print("STM32 gui toi ESP voi quyen la gui");
-        // Serial.print("Received: ");
-        // Serial.print("ID: "); Serial.println(LoRaRx1.id);
-        // Serial.print("RW: "); Serial.println(LoRaRx1.rw);
-        // Serial.print("HUMI: "); Serial.println(LoRaRx1.d_humi);
-        // Serial.print("TEMP: "); Serial.println(LoRaRx1.d_temp);
-        // Serial.print("PPM: "); Serial.println(LoRaRx1.d_ppm);
-        // Serial.print("CO: "); Serial.println(LoRaRx1.d_co);
-        // Serial.print("RL1: "); Serial.println(LoRaRx1.RL1);
-        Serial.print("RL2: "); Serial.println(LoRaRx1.RL2);
-        publishMessage("Data", buffer, true);
-        Serial.println("Da Gui Len MQTT BROKER");
-        UpdateTFT(&LoRaRx1,&LoRaRx2);
-      }else{
-        Serial.print("STM32 gui toi ESP voi quyen la nhan");
-        //TODO
-      }
+  if (Serial2.available()) {
+    String a = Serial2.readStringUntil('\r');  // Đọc dữ liệu từ Serial2 cho đến khi gặp '\r'
+
+    // Khai báo JsonDocument với kích thước cố định
+    StaticJsonDocument<512> doc;
+    DeserializationError error = deserializeJson(doc, a);
+
+    uint8_t temp = doc["ID"];
+    if (temp == ID_STM32_1 && flat1 == 0) {
+      String b = a;
+      flat1 = 1;
+      LoRaRx1.id = temp;
+      LoRaRx1.rw = doc["RW"];
+      LoRaRx1.d_humi = doc["HUMI"];
+      LoRaRx1.d_temp = doc["TEMP"];
+      LoRaRx1.d_ppm  = doc["PPM"];
+      LoRaRx1.d_co   = doc["CO"];
+      LoRaRx1.RL1    = doc["RL1"];
+      LoRaRx1.RL2    = doc["RL2"];
+      Serial.print("ID: ");
+      Serial.println(LoRaRx1.id);
+      publishMessage("Data", b.c_str(), true);
+      Serial.println("Data sent to MQTT broker");
+    UpdateTFT(&LoRaRx1, &LoRaRx2);
+
+    } else if (temp == ID_STM32_2 && flat1 == 1) {
+      String b = a;
+      flat1 = 0;
+      LoRaRx2.id = temp;
+      LoRaRx2.rw = doc["RW"];
+      LoRaRx2.d_humi = doc["HUMI"];
+      LoRaRx2.d_temp = doc["TEMP"];
+      LoRaRx2.d_ppm  = doc["PPM"];
+      LoRaRx2.d_co   = doc["CO"];
+      LoRaRx2.RL1    = doc["RL3"];
+      LoRaRx2.RL2    = doc["RL4"];
+
+      // In các giá trị
+      Serial.print("ID: ");
+    UpdateTFT(&LoRaRx1, &LoRaRx2);
+      publishMessage("Data", b.c_str(), true);
+
+      Serial.println(LoRaRx2.id);
     }
-}
-if(millis() - tick >= 1700){
-	char buf[258];
-	sprintf(buf,
-			"{\"ID\": %u}\n",ID_STM32_1);
-    // LoRa_SendFrame(ID_ESP,1,&LoRaTx);
-    Serial2.print(buf);
-    // Serial.println("DA GUI XUONG STM32 1");
-    tick = millis();
 
   }
 
+  if (millis() - tick >= 1700 && flat1 == 0) {
+    char buf[258];
+    sprintf(buf, "{\"ID\": %u}\n", ID_STM32_1);
+    Serial2.print(buf);
+    tick = millis();
+  }
 
-
-
-
-// if(millis() - tick >= 5000){
-// 	char buf[258];
-// 	sprintf(buf,
-// 			"{\"FAN1\": %u}\n",ID_STM32_1);
-//     // LoRa_SendFrame(ID_ESP,1,&LoRaTx);
-//     Serial2.print(buf);
-//     Serial.println("DA GUI XUONG STM32 1");
-//     tick = millis();
-//   }
-// if (millis() - tick >= 1200) {
-//     char buf[258];
-//     sprintf(buf,
-//             "{\"ID\": %u, \"RL1\": 3, \"RL2\": 3}\n",
-//             ID_STM32_2);  // Thay RL1_value và RL2_value bằng giá trị thực tế của RL1 và RL2
-//     Serial2.print(buf);
-//     Serial.println("DA GUI XUONG STM32 2");
-//     tick = millis();
-// }
-
-  // Serial2.println("Hello World");
-  // delay(500);
-
-  // // Gửi dữ liệu từ Serial Monitor tới UART2
-  // if (Serial.available()) {
-  //   String input = Serial.readString();  // Đọc dữ liệu từ máy tính
-  //   Serial2.println(input);              // Gửi dữ liệu tới UART2
-  //   Serial.println("Sent to UART2: " + input);  // Xác nhận đã gửi
-  // }
+  if (millis() - tick1 >= 2090 && flat1 == 1) {
+    char buf[258];
+    sprintf(buf, "{\"ID\": %u}\n", ID_STM32_2);  // Thay ID_STM32_2 thay vì ID_STM32_1
+    Serial2.print(buf);
+    tick1 = millis();
+  }
 }

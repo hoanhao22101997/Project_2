@@ -1,0 +1,9 @@
+Added Pin To Net: NetName=NetJP1_1 Pin=C1-2
+Added Pin To Net: NetName=NetJP1_1 Pin=C2-2
+Added Pin To Net: NetName=NetJP1_1 Pin=IC1-2
+Added Pin To Net: NetName=NetJP1_1 Pin=JDC1-2
+Added Pin To Net: NetName=NetJP1_1 Pin=JDC1-3
+Added Pin To Net: NetName=NetJP1_1 Pin=L1-2
+Added Pin To Net: NetName=NetJP1_1 Pin=STM1-19
+Added Pin To Net: NetName=NetJP1_1 Pin=SW1-1
+Change Net Name : Old Net Name=NetJP1_1 New Net Name=GND

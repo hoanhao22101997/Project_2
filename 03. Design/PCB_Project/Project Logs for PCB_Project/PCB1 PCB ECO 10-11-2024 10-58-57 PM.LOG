@@ -1,0 +1,23 @@
+Removed Member From Class: ClassName=Project2 Member=      
+Added Component: Designator=H?(Header 7P DC 2.54)
+Add component (AddParameter): Name = "Chung_Loai"; Value = "C?m"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Don_Vi"; Value = "Con"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ghi_Chu"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Kieu_Chan"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ma_Hang"; Value = "MH004118"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ten_Linh_Kien"; Value = "Header 7P XH2.54-7P Ð?c Cong"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetH?_1 Pin=H?-1
+Added Pin To Net: NetName=NetH?_1 Pin=H?-6
+Added Pin To Net: NetName=NetH?_1 Pin=H?-7
+Added Pin To Net: NetName=NetH?_1 Pin=U?-J3-1
+Added Net: Name=NetH?_1
+Added Pin To Net: NetName=NetH?_2 Pin=H?-2
+Added Pin To Net: NetName=NetH?_2 Pin=U?-J2-1
+Added Net: Name=NetH?_2
+Added Pin To Net: NetName=NetH?_4 Pin=H?-4
+Added Pin To Net: NetName=NetH?_4 Pin=U?-J3-12
+Added Net: Name=NetH?_4
+Added Pin To Net: NetName=NetH?_5 Pin=H?-5
+Added Pin To Net: NetName=NetH?_5 Pin=U?-J3-11
+Added Net: Name=NetH?_5
+Added Member To Class: ClassName=Project2 Member=Component H? Header 7P 2.54 Duc Cong

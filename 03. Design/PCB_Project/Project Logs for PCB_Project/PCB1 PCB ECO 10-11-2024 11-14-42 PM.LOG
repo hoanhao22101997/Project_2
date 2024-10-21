@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=NetH?_1 Pin=     -6
+Change Component Designator: OldDesignator=      NewDesignator=H?
+Added Pin To Net: NetName=NetH?_1 Pin=H?-2
+Added Pin To Net: NetName=NetH?_3 Pin=H?-3
+Added Pin To Net: NetName=NetH?_3 Pin=U?-J3-11
+Added Net: Name=NetH?_3
+Added Pin To Net: NetName=NetH?_6 Pin=H?-6
+Added Pin To Net: NetName=NetH?_6 Pin=U?-J2-1
+Added Net: Name=NetH?_6
+Added Member To Class: ClassName=Project2 Member=Component H? Header 7P 2.54 Duc Cong

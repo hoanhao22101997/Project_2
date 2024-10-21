@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=NetJP1_1 Pin=MQ1-1
+Removed Pin From Net: NetName=NetLORA AS1_6 Pin=MQ1-2
+Added Pin To Net: NetName=NetLORA AS1_6 Pin=MQ1-1
+Added Pin To Net: NetName=NetJP1_1 Pin=MQ1-2

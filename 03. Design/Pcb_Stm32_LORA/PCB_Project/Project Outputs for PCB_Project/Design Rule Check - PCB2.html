@@ -1,0 +1,807 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Working Space\altium\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">10/13/2024</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">5:52:44 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc" class="file"><acronym title="C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc">C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">157</td></tr>
+</table>
+</td>
+</table><a name="IDTJ0B5AYW5JIXHM5FGDOBYY3SIFNSYIBLGNSX5KIAILZ2JV01HJIG"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID2KO4PHERPPD4OERIR43QCXRAPL1WK5ON3SSLA2C3AIVFI1W3TLBO">Clearance Constraint (Gap=1mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDBRYQX1A0J0IUNVXDYMSLVIMSDFS2G1HSEJUV3ICIYOO4N5PVHMO">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">116</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDXQXS1BGDTBUZMWS4IRXIJWD1PNXSO1R0EOOIZJJ0NXF4RDT24TAN">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID0GKBYKWTWBTTKERPA0KN1QRPNNQFLW1H025PFCGG1X1T2GANX2BL">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDVGLFZZBRHX2FH2FATASU5DEYMBXZV5YFRRD0NEC2QJSPZPTBWR5O">Width Constraint (Min=0.254mm) (Max=1.016mm) (Preferred=1.016mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5BDC3SIIIB43COBGLNLPDDZF4L0U222KNHHIV2ONWFMR2NROIWT">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDD4GR3LPNA4RBJPAL23LEJGV3SKZSUSC50NDXZDOLBFBH1GKR0QUN">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDS0VYVIFXV2E0C5VLV02ENQ0EMBYQ5WIMKTZAS3EBNU3B44DSLQ5L">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID2N2YURKUA3YSHO2F4QNQDOO4DDA0W1IUZG5WH1IQQ4SMPNNJJ2HE">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDIQDW10ZHYKAXGEGY53BDLTDQVD0XNXBESIY3V4LT0TCDA3SL5JBN">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">37</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDSU5IM4LFKDXEGZKFI05NKYK0AEV40E3QWH0BRBK0V2OJD1ZZPOO">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID0O3GSLM4YQAMDOHRAMNQN1JJPK1DMMKCS3L41G5AVHO3PK10RGH">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3DRK54CDKZ0VO05XEAR453DAELS10NDJGBWSACCELTYZ23ARKXRK">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">157</td>
+</tr>
+</table><br><a name="IDBRYQX1A0J0IUNVXDYMSLVIMSDFS2G1HSEJUV3ICIYOO4N5PVHMO"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Short-Circuit Constraint (Allowed=No) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1306.792mil|Location2.X=1383.208mil|Location1.Y=1821.171mil|Location2.Y=1897.587mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1306.792mil|Location2.X=1383.208mil|Location1.Y=1821.171mil|Location2.Y=1897.587mil|Absolute=True">Short-Circuit Constraint: Between Pad C1-1(34.163mm,47.498mm) on Multi-Layer And Track (34.163mm,43.18mm)(34.163mm,47.498mm) on Bottom Layer Location : [X = 34.163mm][Y = 47.228mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1314.043mil|Location2.X=1380.957mil|Location1.Y=1839.043mil|Location2.Y=1905.957mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1314.043mil|Location2.X=1380.957mil|Location1.Y=1839.043mil|Location2.Y=1905.957mil|Absolute=True">Short-Circuit Constraint: Between Pad C1-1(34.163mm,47.498mm) on Multi-Layer And Track (34.163mm,47.498mm)(34.29mm,47.625mm) on Bottom Layer Location : [X = 34.227mm][Y = 47.562mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1321.978mil|Location2.X=1394.264mil|Location1.Y=1838.857mil|Location2.Y=1911.143mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1321.978mil|Location2.X=1394.264mil|Location1.Y=1838.857mil|Location2.Y=1911.143mil|Absolute=True">Short-Circuit Constraint: Between Pad C1-1(34.163mm,47.498mm) on Multi-Layer And Track (34.29mm,47.625mm)(47.625mm,47.625mm) on Bottom Layer Location : [X = 34.496mm][Y = 47.625mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1291.302mil|Location2.X=1379.001mil|Location1.Y=2016.302mil|Location2.Y=2104.001mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1291.302mil|Location2.X=1379.001mil|Location1.Y=2016.302mil|Location2.Y=2104.001mil|Absolute=True">Short-Circuit Constraint: Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (28.702mm,47.117mm)(34.163mm,52.578mm) on Bottom Layer Location : [X = 33.913mm][Y = 52.328mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1306.755mil|Location2.X=1383.245mil|Location1.Y=2042.42mil|Location2.Y=2118.91mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1306.755mil|Location2.X=1383.245mil|Location1.Y=2042.42mil|Location2.Y=2118.91mil|Absolute=True">Short-Circuit Constraint: Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (34.163mm,52.578mm)(34.163mm,59.927mm) on Bottom Layer Location : [X = 34.163mm][Y = 52.849mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1317.42mil|Location2.X=1393.91mil|Location1.Y=2031.755mil|Location2.Y=2108.245mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1317.42mil|Location2.X=1393.91mil|Location1.Y=2031.755mil|Location2.Y=2108.245mil|Absolute=True">Short-Circuit Constraint: Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (34.163mm,52.578mm)(38.354mm,52.578mm) on Bottom Layer Location : [X = 34.434mm][Y = 52.578mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2345.651mil|Location2.X=2393.107mil|Location1.Y=2051.893mil|Location2.Y=2099.349mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2345.651mil|Location2.X=2393.107mil|Location1.Y=2051.893mil|Location2.Y=2099.349mil|Absolute=True">Short-Circuit Constraint: Between Pad C2-1(60.833mm,52.07mm) on Multi-Layer And Track (47.752mm,52.832mm)(60.071mm,52.832mm) on Bottom Layer Location : [X = 60.182mm][Y = 52.721mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2339.438mil|Location2.X=2429.32mil|Location1.Y=2015.679mil|Location2.Y=2105.562mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2339.438mil|Location2.X=2429.32mil|Location1.Y=2015.679mil|Location2.Y=2105.562mil|Absolute=True">Short-Circuit Constraint: Between Pad C2-1(60.833mm,52.07mm) on Multi-Layer And Track (60.071mm,52.832mm)(60.833mm,52.07mm) on Bottom Layer Location : [X = 60.563mm][Y = 52.34mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2367.413mil|Location2.X=2443.829mil|Location1.Y=2011.792mil|Location2.Y=2088.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2367.413mil|Location2.X=2443.829mil|Location1.Y=2011.792mil|Location2.Y=2088.208mil|Absolute=True">Short-Circuit Constraint: Between Pad C2-1(60.833mm,52.07mm) on Multi-Layer And Track (60.833mm,52.07mm)(66.421mm,52.07mm) on Bottom Layer Location : [X = 61.103mm][Y = 52.07mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2341.302mil|Location2.X=2429.001mil|Location1.Y=1815.999mil|Location2.Y=1903.698mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2341.302mil|Location2.X=2429.001mil|Location1.Y=1815.999mil|Location2.Y=1903.698mil|Absolute=True">Short-Circuit Constraint: Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (57.531mm,50.292mm)(60.833mm,46.99mm) on Bottom Layer Location : [X = 60.583mm][Y = 47.24mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2352.095mil|Location2.X=2422.115mil|Location1.Y=1800.378mil|Location2.Y=1870.397mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2352.095mil|Location2.X=2422.115mil|Location1.Y=1800.378mil|Location2.Y=1870.397mil|Absolute=True">Short-Circuit Constraint: Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (60.632mm,33.982mm)(60.632mm,46.789mm) on Bottom Layer Location : [X = 60.632mm][Y = 46.619mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2355.549mil|Location2.X=2426.556mil|Location1.Y=1810.549mil|Location2.Y=1881.556mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2355.549mil|Location2.X=2426.556mil|Location1.Y=1810.549mil|Location2.Y=1881.556mil|Absolute=True">Short-Circuit Constraint: Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (60.632mm,46.789mm)(60.833mm,46.99mm) on Bottom Layer Location : [X = 60.733mm][Y = 46.89mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1822.796mil|Location2.X=1902.301mil|Location1.Y=1835.247mil|Location2.Y=1914.753mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1822.796mil|Location2.X=1902.301mil|Location1.Y=1835.247mil|Location2.Y=1914.753mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-1(47.752mm,47.752mm) on Multi-Layer And Track (34.29mm,47.625mm)(47.625mm,47.625mm) on Bottom Layer Location : [X = 47.309mm][Y = 47.625mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1844.043mil|Location2.X=1910.957mil|Location1.Y=1844.043mil|Location2.Y=1910.957mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1844.043mil|Location2.X=1910.957mil|Location1.Y=1844.043mil|Location2.Y=1910.957mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-1(47.752mm,47.752mm) on Multi-Layer And Track (47.625mm,47.625mm)(47.752mm,47.752mm) on Bottom Layer Location : [X = 47.688mm][Y = 47.688mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1823.032mil|Location2.X=1906.941mil|Location1.Y=1938.045mil|Location2.Y=2021.955mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1823.032mil|Location2.X=1906.941mil|Location1.Y=1938.045mil|Location2.Y=2021.955mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-2(47.752mm,50.292mm) on Multi-Layer And Track (40.64mm,50.292mm)(47.752mm,50.292mm) on Bottom Layer Location : [X = 47.371mm][Y = 50.292mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1815.687mil|Location2.X=1863.126mil|Location1.Y=1957.788mil|Location2.Y=2005.227mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1815.687mil|Location2.X=1863.126mil|Location1.Y=1957.788mil|Location2.Y=2005.227mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-2(47.752mm,50.292mm) on Multi-Layer And Track (43.053mm,53.708mm)(46.453mm,50.308mm) on Bottom Layer Location : [X = 46.721mm][Y = 50.33mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1822.99mil|Location2.X=1906.354mil|Location1.Y=1938.948mil|Location2.Y=2022.312mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1822.99mil|Location2.X=1906.354mil|Location1.Y=1938.948mil|Location2.Y=2022.312mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-2(47.752mm,50.292mm) on Multi-Layer And Track (46.453mm,50.308mm)(47.736mm,50.308mm) on Bottom Layer Location : [X = 47.363mm][Y = 50.308mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1849.319mil|Location2.X=1910.052mil|Location1.Y=1949.948mil|Location2.Y=2010.681mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1849.319mil|Location2.X=1910.052mil|Location1.Y=1949.948mil|Location2.Y=2010.681mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-2(47.752mm,50.292mm) on Multi-Layer And Track (47.736mm,50.308mm)(47.752mm,50.292mm) on Bottom Layer Location : [X = 47.744mm][Y = 50.3mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1853.058mil|Location2.X=1936.968mil|Location1.Y=1938.045mil|Location2.Y=2021.955mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1853.058mil|Location2.X=1936.968mil|Location1.Y=1938.045mil|Location2.Y=2021.955mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-2(47.752mm,50.292mm) on Multi-Layer And Track (47.752mm,50.292mm)(57.531mm,50.292mm) on Bottom Layer Location : [X = 48.133mm][Y = 50.292mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1853.058mil|Location2.X=1936.968mil|Location1.Y=2038.045mil|Location2.Y=2121.955mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1853.058mil|Location2.X=1936.968mil|Location1.Y=2038.045mil|Location2.Y=2121.955mil|Absolute=True">Short-Circuit Constraint: Between Pad IC1-3(47.752mm,52.832mm) on Multi-Layer And Track (47.752mm,52.832mm)(60.071mm,52.832mm) on Bottom Layer Location : [X = 48.133mm][Y = 52.832mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1418.983mil|Location2.X=1521.114mil|Location1.Y=1523.886mil|Location2.Y=1626.017mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1418.983mil|Location2.X=1521.114mil|Location1.Y=1523.886mil|Location2.Y=1626.017mil|Absolute=True">Short-Circuit Constraint: Between Pad JDC1-1(38.481mm,39.624mm) on Multi-Layer And Track (34.163mm,43.18mm)(37.719mm,39.624mm) on Bottom Layer Location : [X = 37.339mm][Y = 40.004mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1458.057mil|Location2.X=1541.943mil|Location1.Y=1518.057mil|Location2.Y=1601.943mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1458.057mil|Location2.X=1541.943mil|Location1.Y=1518.057mil|Location2.Y=1601.943mil|Absolute=True">Short-Circuit Constraint: Between Pad JDC1-1(38.481mm,39.624mm) on Multi-Layer And Track (37.719mm,39.624mm)(38.481mm,39.624mm) on Bottom Layer Location : [X = 38.1mm][Y = 39.624mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1429.616mil|Location2.X=1540.481mil|Location1.Y=1254.567mil|Location2.Y=1365.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1429.616mil|Location2.X=1540.481mil|Location1.Y=1254.567mil|Location2.Y=1365.433mil|Absolute=True">Short-Circuit Constraint: Between Pad JDC1-2(38.481mm,33.274mm) on Multi-Layer And Track (34.801mm,33.274mm)(38.481mm,33.274mm) on Bottom Layer Location : [X = 37.72mm][Y = 33.274mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1489.519mil|Location2.X=1600.384mil|Location1.Y=1254.567mil|Location2.Y=1365.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1489.519mil|Location2.X=1600.384mil|Location1.Y=1254.567mil|Location2.Y=1365.433mil|Absolute=True">Short-Circuit Constraint: Between Pad JDC1-2(38.481mm,33.274mm) on Multi-Layer And Track (38.481mm,33.274mm)(43.561mm,33.274mm) on Bottom Layer Location : [X = 39.242mm][Y = 33.274mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1679.901mil|Location2.X=1775.099mil|Location1.Y=1399.901mil|Location2.Y=1495.099mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1679.901mil|Location2.X=1775.099mil|Location1.Y=1399.901mil|Location2.Y=1495.099mil|Absolute=True">Short-Circuit Constraint: Between Pad JDC1-3(43.561mm,37.084mm) on Multi-Layer And Track (43.561mm,37.084mm)(44.196mm,36.449mm) on Bottom Layer Location : [X = 43.879mm][Y = 36.767mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1695.912mil|Location2.X=1784.088mil|Location1.Y=1373.46mil|Location2.Y=1461.637mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1695.912mil|Location2.X=1784.088mil|Location1.Y=1373.46mil|Location2.Y=1461.637mil|Absolute=True">Short-Circuit Constraint: Between Pad JDC1-3(43.561mm,37.084mm) on Multi-Layer And Track (44.196mm,33.909mm)(44.196mm,36.449mm) on Bottom Layer Location : [X = 44.196mm][Y = 36.006mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4650.275mil|Location2.X=4709.98mil|Location1.Y=2805.274mil|Location2.Y=2864.98mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4650.275mil|Location2.X=4709.98mil|Location1.Y=2805.274mil|Location2.Y=2864.98mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-1(119.126mm,72.263mm) on Multi-Layer And Track (110.619mm,72.011mm)(118.874mm,72.011mm) on Bottom Layer Location : [X = 118.875mm][Y = 72.012mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4646.185mil|Location2.X=4733.815mil|Location1.Y=2801.185mil|Location2.Y=2888.815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4646.185mil|Location2.X=4733.815mil|Location1.Y=2801.185mil|Location2.Y=2888.815mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-1(119.126mm,72.263mm) on Multi-Layer And Track (118.874mm,72.011mm)(130.937mm,84.074mm) on Bottom Layer Location : [X = 119.126mm][Y = 72.263mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4650.982mil|Location2.X=4715.305mil|Location1.Y=2709.042mil|Location2.Y=2773.365mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4650.982mil|Location2.X=4715.305mil|Location1.Y=2709.042mil|Location2.Y=2773.365mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-2(119.126mm,69.723mm) on Multi-Layer And Track (114.712mm,69.627mm)(119.03mm,69.627mm) on Bottom Layer Location : [X = 118.952mm][Y = 69.627mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4655.496mil|Location2.X=4720.707mil|Location1.Y=2710.496mil|Location2.Y=2775.707mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4655.496mil|Location2.X=4720.707mil|Location1.Y=2710.496mil|Location2.Y=2775.707mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-2(119.126mm,69.723mm) on Multi-Layer And Track (119.03mm,69.627mm)(119.126mm,69.723mm) on Bottom Layer Location : [X = 119.078mm][Y = 69.675mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4650.982mil|Location2.X=4715.305mil|Location1.Y=2609.042mil|Location2.Y=2673.365mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4650.982mil|Location2.X=4715.305mil|Location1.Y=2609.042mil|Location2.Y=2673.365mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-3(119.126mm,67.183mm) on Multi-Layer And Track (117.339mm,67.087mm)(119.03mm,67.087mm) on Bottom Layer Location : [X = 118.952mm][Y = 67.087mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4655.496mil|Location2.X=4720.707mil|Location1.Y=2610.496mil|Location2.Y=2675.707mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4655.496mil|Location2.X=4720.707mil|Location1.Y=2610.496mil|Location2.Y=2675.707mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-3(119.126mm,67.183mm) on Multi-Layer And Track (119.03mm,67.087mm)(119.126mm,67.183mm) on Bottom Layer Location : [X = 119.078mm][Y = 67.135mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4659.293mil|Location2.X=4724.504mil|Location1.Y=2610.496mil|Location2.Y=2675.707mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4659.293mil|Location2.X=4724.504mil|Location1.Y=2610.496mil|Location2.Y=2675.707mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-3(119.126mm,67.183mm) on Multi-Layer And Track (119.126mm,67.183mm)(119.222mm,67.087mm) on Bottom Layer Location : [X = 119.174mm][Y = 67.135mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4661.339mil|Location2.X=4728.578mil|Location1.Y=2511.381mil|Location2.Y=2578.619mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4661.339mil|Location2.X=4728.578mil|Location1.Y=2511.381mil|Location2.Y=2578.619mil|Absolute=True">Short-Circuit Constraint: Between Pad JP1-4(119.126mm,64.643mm) on Multi-Layer And Track (119.126mm,64.643mm)(128.27mm,64.643mm) on Bottom Layer Location : [X = 119.252mm][Y = 64.643mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4616.505mil|Location2.X=4683.671mil|Location1.Y=3331.417mil|Location2.Y=3398.583mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4616.505mil|Location2.X=4683.671mil|Location1.Y=3331.417mil|Location2.Y=3398.583mil|Absolute=True">Short-Circuit Constraint: Between Pad JP2-1(118.237mm,85.471mm) on Multi-Layer And Track (110.236mm,85.471mm)(118.237mm,85.471mm) on Bottom Layer Location : [X = 118.112mm][Y = 85.471mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4616.422mil|Location2.X=4683.661mil|Location1.Y=3231.381mil|Location2.Y=3298.619mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4616.422mil|Location2.X=4683.661mil|Location1.Y=3231.381mil|Location2.Y=3298.619mil|Absolute=True">Short-Circuit Constraint: Between Pad JP2-2(118.237mm,82.931mm) on Multi-Layer And Track (113.157mm,82.931mm)(118.237mm,82.931mm) on Bottom Layer Location : [X = 118.111mm][Y = 82.931mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1401.329mil|Location2.X=1468.495mil|Location1.Y=3911.417mil|Location2.Y=3978.583mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1401.329mil|Location2.X=1468.495mil|Location1.Y=3911.417mil|Location2.Y=3978.583mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-1(36.322mm,100.203mm) on Multi-Layer And Track (36.322mm,100.203mm)(38.862mm,100.203mm) on Bottom Layer Location : [X = 36.447mm][Y = 100.203mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1396.417mil|Location2.X=1463.583mil|Location1.Y=3906.505mil|Location2.Y=3973.671mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1396.417mil|Location2.X=1463.583mil|Location1.Y=3906.505mil|Location2.Y=3973.671mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-1(36.322mm,100.203mm) on Multi-Layer And Track (36.322mm,95.758mm)(36.322mm,100.203mm) on Bottom Layer Location : [X = 36.322mm][Y = 100.078mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1491.422mil|Location2.X=1558.661mil|Location1.Y=3911.381mil|Location2.Y=3978.619mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1491.422mil|Location2.X=1558.661mil|Location1.Y=3911.381mil|Location2.Y=3978.619mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-2(38.862mm,100.203mm) on Multi-Layer And Track (36.322mm,100.203mm)(38.862mm,100.203mm) on Bottom Layer Location : [X = 38.736mm][Y = 100.203mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1599.293mil|Location2.X=1664.504mil|Location1.Y=3910.496mil|Location2.Y=3975.707mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1599.293mil|Location2.X=1664.504mil|Location1.Y=3910.496mil|Location2.Y=3975.707mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-3(41.402mm,100.203mm) on Multi-Layer And Track (41.402mm,100.203mm)(41.498mm,100.107mm) on Bottom Layer Location : [X = 41.45mm][Y = 100.155mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1601.635mil|Location2.X=1665.958mil|Location1.Y=3905.982mil|Location2.Y=3970.305mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1601.635mil|Location2.X=1665.958mil|Location1.Y=3905.982mil|Location2.Y=3970.305mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-3(41.402mm,100.203mm) on Multi-Layer And Track (41.498mm,99.128mm)(41.498mm,100.107mm) on Bottom Layer Location : [X = 41.498mm][Y = 100.029mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1617.535mil|Location2.X=1647.261mil|Location1.Y=3904.019mil|Location2.Y=3933.744mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1617.535mil|Location2.X=1647.261mil|Location1.Y=3904.019mil|Location2.Y=3933.744mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-3(41.402mm,100.203mm) on Multi-Layer And Track (41.498mm,99.128mm)(46.266mm,94.361mm) on Bottom Layer Location : [X = 41.463mm][Y = 99.54mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1699.293mil|Location2.X=1764.504mil|Location1.Y=3910.496mil|Location2.Y=3975.707mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1699.293mil|Location2.X=1764.504mil|Location1.Y=3910.496mil|Location2.Y=3975.707mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-4(43.942mm,100.203mm) on Multi-Layer And Track (43.942mm,100.203mm)(44.038mm,100.107mm) on Bottom Layer Location : [X = 43.99mm][Y = 100.155mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1701.635mil|Location2.X=1765.958mil|Location1.Y=3905.982mil|Location2.Y=3970.305mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1701.635mil|Location2.X=1765.958mil|Location1.Y=3905.982mil|Location2.Y=3970.305mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-4(43.942mm,100.203mm) on Multi-Layer And Track (44.038mm,99.439mm)(44.038mm,100.107mm) on Bottom Layer Location : [X = 44.038mm][Y = 100.029mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1710.31mil|Location2.X=1756.195mil|Location1.Y=3902.062mil|Location2.Y=3947.947mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1710.31mil|Location2.X=1756.195mil|Location1.Y=3902.062mil|Location2.Y=3947.947mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-4(43.942mm,100.203mm) on Multi-Layer And Track (44.038mm,99.439mm)(45.543mm,97.935mm) on Bottom Layer Location : [X = 44.025mm][Y = 99.695mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1894.042mil|Location2.X=1958.365mil|Location1.Y=3919.695mil|Location2.Y=3984.018mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1894.042mil|Location2.X=1958.365mil|Location1.Y=3919.695mil|Location2.Y=3984.018mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-6(49.022mm,100.203mm) on Multi-Layer And Track (48.926mm,100.299mm)(48.926mm,101.569mm) on Bottom Layer Location : [X = 48.926mm][Y = 100.377mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1895.496mil|Location2.X=1960.707mil|Location1.Y=3914.293mil|Location2.Y=3979.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1895.496mil|Location2.X=1960.707mil|Location1.Y=3914.293mil|Location2.Y=3979.504mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-6(49.022mm,100.203mm) on Multi-Layer And Track (48.926mm,100.299mm)(49.022mm,100.203mm) on Bottom Layer Location : [X = 48.974mm][Y = 100.251mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1996.381mil|Location2.X=2063.619mil|Location1.Y=3916.339mil|Location2.Y=3983.578mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1996.381mil|Location2.X=2063.619mil|Location1.Y=3916.339mil|Location2.Y=3983.578mil|Absolute=True">Short-Circuit Constraint: Between Pad LORA AS1-7(51.562mm,100.203mm) on Multi-Layer And Track (51.562mm,100.203mm)(51.562mm,104.013mm) on Bottom Layer Location : [X = 51.562mm][Y = 100.329mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4637.391mil|Location2.X=4681.763mil|Location1.Y=4169.803mil|Location2.Y=4214.175mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4637.391mil|Location2.X=4681.763mil|Location1.Y=4169.803mil|Location2.Y=4214.175mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-1(118.618mm,107.061mm) on Multi-Layer And Track (110.649mm,98.425mm)(118.366mm,106.142mm) on Bottom Layer Location : [X = 118.353mm][Y = 106.477mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4630.275mil|Location2.X=4689.98mil|Location1.Y=4175.275mil|Location2.Y=4234.98mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4630.275mil|Location2.X=4689.98mil|Location1.Y=4175.275mil|Location2.Y=4234.98mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-1(118.618mm,107.061mm) on Multi-Layer And Track (118.366mm,106.142mm)(118.366mm,106.809mm) on Bottom Layer Location : [X = 118.367mm][Y = 106.81mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4628.22mil|Location2.X=4701.956mil|Location1.Y=4173.22mil|Location2.Y=4246.956mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4628.22mil|Location2.X=4701.956mil|Location1.Y=4173.22mil|Location2.Y=4246.956mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-1(118.618mm,107.061mm) on Multi-Layer And Track (118.366mm,106.809mm)(118.618mm,107.061mm) on Bottom Layer Location : [X = 118.493mm][Y = 106.936mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4543.805mil|Location2.X=4589.69mil|Location1.Y=4212.053mil|Location2.Y=4257.938mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4543.805mil|Location2.X=4589.69mil|Location1.Y=4212.053mil|Location2.Y=4257.938mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-2(116.078mm,107.061mm) on Multi-Layer And Track (114.477mm,109.329mm)(115.982mm,107.825mm) on Bottom Layer Location : [X = 115.995mm][Y = 107.569mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4534.042mil|Location2.X=4598.365mil|Location1.Y=4189.695mil|Location2.Y=4254.018mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4534.042mil|Location2.X=4598.365mil|Location1.Y=4189.695mil|Location2.Y=4254.018mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-2(116.078mm,107.061mm) on Multi-Layer And Track (115.982mm,107.157mm)(115.982mm,107.825mm) on Bottom Layer Location : [X = 115.982mm][Y = 107.235mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4535.496mil|Location2.X=4600.707mil|Location1.Y=4184.293mil|Location2.Y=4249.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4535.496mil|Location2.X=4600.707mil|Location1.Y=4184.293mil|Location2.Y=4249.504mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-2(116.078mm,107.061mm) on Multi-Layer And Track (115.982mm,107.157mm)(116.078mm,107.061mm) on Bottom Layer Location : [X = 116.03mm][Y = 107.109mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4328.248mil|Location2.X=4401.951mil|Location1.Y=4173.248mil|Location2.Y=4246.951mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4328.248mil|Location2.X=4401.951mil|Location1.Y=4173.248mil|Location2.Y=4246.951mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ1-4(110.998mm,107.061mm) on Multi-Layer And Track (108.982mm,105.045mm)(110.998mm,107.061mm) on Bottom Layer Location : [X = 110.874mm][Y = 106.937mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5121.381mil|Location2.X=5188.619mil|Location1.Y=4181.339mil|Location2.Y=4248.578mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5121.381mil|Location2.X=5188.619mil|Location1.Y=4181.339mil|Location2.Y=4248.578mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ2-2(130.937mm,106.934mm) on Multi-Layer And Track (130.937mm,106.934mm)(130.937mm,109.22mm) on Bottom Layer Location : [X = 130.937mm][Y = 107.06mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5121.381mil|Location2.X=5188.619mil|Location1.Y=4171.422mil|Location2.Y=4238.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5121.381mil|Location2.X=5188.619mil|Location1.Y=4171.422mil|Location2.Y=4238.661mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ2-2(130.937mm,106.934mm) on Multi-Layer And Track (130.937mm,84.074mm)(130.937mm,106.934mm) on Bottom Layer Location : [X = 130.937mm][Y = 106.808mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4916.422mil|Location2.X=4983.661mil|Location1.Y=4176.381mil|Location2.Y=4243.619mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4916.422mil|Location2.X=4983.661mil|Location1.Y=4176.381mil|Location2.Y=4243.619mil|Absolute=True">Short-Circuit Constraint: Between Pad MQ2-4(125.857mm,106.934mm) on Multi-Layer And Track (123.277mm,106.934mm)(125.857mm,106.934mm) on Bottom Layer Location : [X = 125.731mm][Y = 106.934mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4413.052mil|Location2.X=4496.943mil|Location1.Y=1993.054mil|Location2.Y=2076.946mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4413.052mil|Location2.X=4496.943mil|Location1.Y=1993.054mil|Location2.Y=2076.946mil|Absolute=True">Short-Circuit Constraint: Between Pad Q1-1(113.538mm,51.689mm) on Multi-Layer And Track (108.585mm,51.689mm)(113.538mm,51.689mm) on Bottom Layer Location : [X = 113.157mm][Y = 51.689mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4443.057mil|Location2.X=4526.948mil|Location1.Y=1893.054mil|Location2.Y=1976.946mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4443.057mil|Location2.X=4526.948mil|Location1.Y=1893.054mil|Location2.Y=1976.946mil|Absolute=True">Short-Circuit Constraint: Between Pad Q1-2(113.538mm,49.149mm) on Multi-Layer And Track (113.538mm,49.149mm)(120.269mm,49.149mm) on Bottom Layer Location : [X = 113.919mm][Y = 49.149mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4409.548mil|Location2.X=4466.411mil|Location1.Y=1796.706mil|Location2.Y=1853.569mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4409.548mil|Location2.X=4466.411mil|Location1.Y=1796.706mil|Location2.Y=1853.569mil|Absolute=True">Short-Circuit Constraint: Between Pad Q1-3(113.538mm,46.609mm) on Multi-Layer And Track (105.684mm,46.355mm)(112.673mm,46.355mm) on Bottom Layer Location : [X = 112.725mm][Y = 46.359mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4407.484mil|Location2.X=4478.475mil|Location1.Y=1794.642mil|Location2.Y=1865.633mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4407.484mil|Location2.X=4478.475mil|Location1.Y=1794.642mil|Location2.Y=1865.633mil|Absolute=True">Short-Circuit Constraint: Between Pad Q1-3(113.538mm,46.609mm) on Multi-Layer And Track (112.673mm,46.355mm)(112.927mm,46.609mm) on Bottom Layer Location : [X = 112.852mm][Y = 46.485mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4418.598mil|Location2.X=4497.367mil|Location1.Y=1795.616mil|Location2.Y=1874.384mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4418.598mil|Location2.X=4497.367mil|Location1.Y=1795.616mil|Location2.Y=1874.384mil|Absolute=True">Short-Circuit Constraint: Between Pad Q1-3(113.538mm,46.609mm) on Multi-Layer And Track (112.927mm,46.609mm)(113.538mm,46.609mm) on Bottom Layer Location : [X = 113.233mm][Y = 46.609mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4413.052mil|Location2.X=4496.943mil|Location1.Y=1628.054mil|Location2.Y=1711.946mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4413.052mil|Location2.X=4496.943mil|Location1.Y=1628.054mil|Location2.Y=1711.946mil|Absolute=True">Short-Circuit Constraint: Between Pad Q2-1(113.538mm,42.418mm) on Multi-Layer And Track (102.997mm,42.418mm)(113.538mm,42.418mm) on Bottom Layer Location : [X = 113.157mm][Y = 42.418mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4439.561mil|Location2.X=4502.939mil|Location1.Y=1539.561mil|Location2.Y=1602.939mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4439.561mil|Location2.X=4502.939mil|Location1.Y=1539.561mil|Location2.Y=1602.939mil|Absolute=True">Short-Circuit Constraint: Between Pad Q2-2(113.538mm,39.878mm) on Multi-Layer And Track (113.538mm,39.878mm)(113.602mm,39.941mm) on Bottom Layer Location : [X = 113.57mm][Y = 39.91mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4443.057mil|Location2.X=4526.948mil|Location1.Y=1528.054mil|Location2.Y=1611.946mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4443.057mil|Location2.X=4526.948mil|Location1.Y=1528.054mil|Location2.Y=1611.946mil|Absolute=True">Short-Circuit Constraint: Between Pad Q2-2(113.538mm,39.878mm) on Multi-Layer And Track (113.538mm,39.878mm)(121.138mm,39.878mm) on Bottom Layer Location : [X = 113.919mm][Y = 39.878mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4413.052mil|Location2.X=4496.943mil|Location1.Y=1428.054mil|Location2.Y=1511.946mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4413.052mil|Location2.X=4496.943mil|Location1.Y=1428.054mil|Location2.Y=1511.946mil|Absolute=True">Short-Circuit Constraint: Between Pad Q2-3(113.538mm,37.338mm) on Multi-Layer And Track (109.739mm,37.338mm)(113.538mm,37.338mm) on Bottom Layer Location : [X = 113.157mm][Y = 37.338mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2353.692mil|Location2.X=2417.626mil|Location1.Y=1304.48mil|Location2.Y=1368.413mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2353.692mil|Location2.X=2417.626mil|Location1.Y=1304.48mil|Location2.Y=1368.413mil|Absolute=True">Short-Circuit Constraint: Between Pad R1-1(60.559mm,33.909mm) on Multi-Layer And Track (60.559mm,33.909mm)(60.632mm,33.982mm) on Bottom Layer Location : [X = 60.596mm][Y = 33.946mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2355.494mil|Location2.X=2418.717mil|Location1.Y=1308.608mil|Location2.Y=1371.832mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2355.494mil|Location2.X=2418.717mil|Location1.Y=1308.608mil|Location2.Y=1371.832mil|Absolute=True">Short-Circuit Constraint: Between Pad R1-1(60.559mm,33.909mm) on Multi-Layer And Track (60.632mm,33.982mm)(60.632mm,46.789mm) on Bottom Layer Location : [X = 60.632mm][Y = 34.042mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.857mil|Location2.X=2822.265mil|Location1.Y=1302.296mil|Location2.Y=1367.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.857mil|Location2.X=2822.265mil|Location1.Y=1302.296mil|Location2.Y=1367.704mil|Absolute=True">Short-Circuit Constraint: Between Pad R1-2(70.759mm,33.909mm) on Multi-Layer And Track (70.759mm,33.909mm)(78.753mm,33.909mm) on Bottom Layer Location : [X = 70.855mm][Y = 33.909mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4735.421mil|Location2.X=4766.244mil|Location1.Y=1914.588mil|Location2.Y=1945.412mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4735.421mil|Location2.X=4766.244mil|Location1.Y=1914.588mil|Location2.Y=1945.412mil|Absolute=True">Short-Circuit Constraint: Between Pad R2-1(121.265mm,49.022mm) on Multi-Layer And Track (112.268mm,57.023mm)(120.269mm,49.022mm) on Bottom Layer Location : [X = 120.671mm][Y = 49.022mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4735.689mil|Location2.X=4765.976mil|Location1.Y=1917.986mil|Location2.Y=1948.273mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4735.689mil|Location2.X=4765.976mil|Location1.Y=1917.986mil|Location2.Y=1948.273mil|Absolute=True">Short-Circuit Constraint: Between Pad R2-1(121.265mm,49.022mm) on Multi-Layer And Track (113.538mm,49.149mm)(120.269mm,49.149mm) on Bottom Layer Location : [X = 120.671mm][Y = 49.101mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4737.735mil|Location2.X=4803.143mil|Location1.Y=1897.296mil|Location2.Y=1962.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4737.735mil|Location2.X=4803.143mil|Location1.Y=1897.296mil|Location2.Y=1962.704mil|Absolute=True">Short-Circuit Constraint: Between Pad R2-1(121.265mm,49.022mm) on Multi-Layer And Track (120.269mm,49.022mm)(121.265mm,49.022mm) on Bottom Layer Location : [X = 121.169mm][Y = 49.022mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5141.529mil|Location2.X=5205.046mil|Location1.Y=1893.218mil|Location2.Y=1956.735mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5141.529mil|Location2.X=5205.046mil|Location1.Y=1893.218mil|Location2.Y=1956.735mil|Absolute=True">Short-Circuit Constraint: Between Pad R2-2(131.465mm,49.022mm) on Multi-Layer And Track (131.401mm,39.941mm)(131.401mm,48.959mm) on Bottom Layer Location : [X = 131.401mm][Y = 48.894mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5142.849mil|Location2.X=5206.226mil|Location1.Y=1897.061mil|Location2.Y=1960.439mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5142.849mil|Location2.X=5206.226mil|Location1.Y=1897.061mil|Location2.Y=1960.439mil|Absolute=True">Short-Circuit Constraint: Between Pad R2-2(131.465mm,49.022mm) on Multi-Layer And Track (131.401mm,48.959mm)(131.465mm,49.022mm) on Bottom Layer Location : [X = 131.433mm][Y = 48.99mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5143.083mil|Location2.X=5208.491mil|Location1.Y=1901.07mil|Location2.Y=1966.478mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5143.083mil|Location2.X=5208.491mil|Location1.Y=1901.07mil|Location2.Y=1966.478mil|Absolute=True">Short-Circuit Constraint: Between Pad R2-2(131.465mm,49.022mm) on Multi-Layer And Track (131.465mm,49.022mm)(131.465mm,61.448mm) on Bottom Layer Location : [X = 131.465mm][Y = 49.118mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4732.735mil|Location2.X=4798.143mil|Location1.Y=1537.296mil|Location2.Y=1602.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4732.735mil|Location2.X=4798.143mil|Location1.Y=1537.296mil|Location2.Y=1602.704mil|Absolute=True">Short-Circuit Constraint: Between Pad R3-1(121.138mm,39.878mm) on Multi-Layer And Track (113.538mm,39.878mm)(121.138mm,39.878mm) on Bottom Layer Location : [X = 121.042mm][Y = 39.878mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4736.509mil|Location2.X=4801.917mil|Location1.Y=1541.07mil|Location2.Y=1606.478mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4736.509mil|Location2.X=4801.917mil|Location1.Y=1541.07mil|Location2.Y=1606.478mil|Absolute=True">Short-Circuit Constraint: Between Pad R3-1(121.138mm,39.878mm) on Multi-Layer And Track (121.138mm,39.878mm)(121.138mm,43.541mm) on Bottom Layer Location : [X = 121.138mm][Y = 39.974mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5131.756mil|Location2.X=5202.272mil|Location1.Y=1530.968mil|Location2.Y=1601.484mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5131.756mil|Location2.X=5202.272mil|Location1.Y=1530.968mil|Location2.Y=1601.484mil|Absolute=True">Short-Circuit Constraint: Between Pad R3-2(131.338mm,39.878mm) on Multi-Layer And Track (122.702mm,31.242mm)(131.338mm,39.878mm) on Bottom Layer Location : [X = 131.242mm][Y = 39.782mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5140.349mil|Location2.X=5203.726mil|Location1.Y=1539.561mil|Location2.Y=1602.939mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5140.349mil|Location2.X=5203.726mil|Location1.Y=1539.561mil|Location2.Y=1602.939mil|Absolute=True">Short-Circuit Constraint: Between Pad R3-2(131.338mm,39.878mm) on Multi-Layer And Track (131.338mm,39.878mm)(131.401mm,39.941mm) on Bottom Layer Location : [X = 131.37mm][Y = 39.91mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5141.529mil|Location2.X=5205.046mil|Location1.Y=1543.265mil|Location2.Y=1606.782mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5141.529mil|Location2.X=5205.046mil|Location1.Y=1543.265mil|Location2.Y=1606.782mil|Absolute=True">Short-Circuit Constraint: Between Pad R3-2(131.338mm,39.878mm) on Multi-Layer And Track (131.401mm,39.941mm)(131.401mm,48.959mm) on Bottom Layer Location : [X = 131.401mm][Y = 40.006mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3720.181mil|Location2.X=3790.697mil|Location1.Y=1793.516mil|Location2.Y=1864.032mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3720.181mil|Location2.X=3790.697mil|Location1.Y=1793.516mil|Location2.Y=1864.032mil|Absolute=True">Short-Circuit Constraint: Between Pad R4-1(95.484mm,46.355mm) on Multi-Layer And Track (91.828mm,50.011mm)(95.484mm,46.355mm) on Bottom Layer Location : [X = 95.388mm][Y = 46.451mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4131.857mil|Location2.X=4197.265mil|Location1.Y=1792.296mil|Location2.Y=1857.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4131.857mil|Location2.X=4197.265mil|Location1.Y=1792.296mil|Location2.Y=1857.704mil|Absolute=True">Short-Circuit Constraint: Between Pad R4-2(105.684mm,46.355mm) on Multi-Layer And Track (105.684mm,46.355mm)(112.673mm,46.355mm) on Bottom Layer Location : [X = 105.78mm][Y = 46.355mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3720.181mil|Location2.X=3790.697mil|Location1.Y=1468.516mil|Location2.Y=1539.032mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3720.181mil|Location2.X=3790.697mil|Location1.Y=1468.516mil|Location2.Y=1539.032mil|Absolute=True">Short-Circuit Constraint: Between Pad R5-1(95.484mm,38.1mm) on Multi-Layer And Track (80.391mm,53.193mm)(95.484mm,38.1mm) on Bottom Layer Location : [X = 95.388mm][Y = 38.196mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4131.857mil|Location2.X=4197.265mil|Location1.Y=1467.296mil|Location2.Y=1532.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4131.857mil|Location2.X=4197.265mil|Location1.Y=1467.296mil|Location2.Y=1532.704mil|Absolute=True">Short-Circuit Constraint: Between Pad R5-2(105.684mm,38.1mm) on Multi-Layer And Track (105.684mm,38.1mm)(108.977mm,38.1mm) on Bottom Layer Location : [X = 105.78mm][Y = 38.1mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2803.005mil|Location2.X=2886.225mil|Location1.Y=2898.39mil|Location2.Y=2981.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2803.005mil|Location2.X=2886.225mil|Location1.Y=2898.39mil|Location2.Y=2981.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-12(71.882mm,74.676mm) on Multi-Layer And Track (71.882mm,74.676mm)(81.026mm,74.676mm) on Bottom Layer Location : [X = 72.253mm][Y = 74.676mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.277mil|Location2.X=2883.953mil|Location1.Y=2818.486mil|Location2.Y=2882.161mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.277mil|Location2.X=2883.953mil|Location1.Y=2818.486mil|Location2.Y=2882.161mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-13(71.882mm,72.136mm) on Multi-Layer And Track (72.263mm,72.568mm)(78.943mm,72.568mm) on Bottom Layer Location : [X = 72.444mm][Y = 72.398mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=2698.39mil|Location2.Y=2781.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=2698.39mil|Location2.Y=2781.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-14(71.882mm,69.596mm) on Multi-Layer And Track (65.151mm,69.596mm)(71.882mm,69.596mm) on Bottom Layer Location : [X = 71.511mm][Y = 69.596mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=2598.39mil|Location2.Y=2681.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=2598.39mil|Location2.Y=2681.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-15(71.882mm,67.056mm) on Multi-Layer And Track (64.135mm,67.056mm)(71.882mm,67.056mm) on Bottom Layer Location : [X = 71.511mm][Y = 67.056mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2803.005mil|Location2.X=2886.225mil|Location1.Y=2298.39mil|Location2.Y=2381.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2803.005mil|Location2.X=2886.225mil|Location1.Y=2298.39mil|Location2.Y=2381.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-18(71.882mm,59.436mm) on Multi-Layer And Track (71.882mm,59.436mm)(74.295mm,59.436mm) on Bottom Layer Location : [X = 72.253mm][Y = 59.436mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.68mil|Location2.X=2855.703mil|Location1.Y=2200.374mil|Location2.Y=2282.398mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.68mil|Location2.X=2855.703mil|Location1.Y=2200.374mil|Location2.Y=2282.398mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-19(71.882mm,56.896mm) on Multi-Layer And Track (69.542mm,56.931mm)(71.847mm,56.931mm) on Bottom Layer Location : [X = 71.493mm][Y = 56.931mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.406mil|Location2.X=2860.208mil|Location1.Y=2209.792mil|Location2.Y=2271.594mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2798.406mil|Location2.X=2860.208mil|Location1.Y=2209.792mil|Location2.Y=2271.594mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-19(71.882mm,56.896mm) on Multi-Layer And Track (71.847mm,56.931mm)(71.882mm,56.896mm) on Bottom Layer Location : [X = 71.864mm][Y = 56.914mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=2098.39mil|Location2.Y=2181.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=2098.39mil|Location2.Y=2181.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-20(71.882mm,54.356mm) on Multi-Layer And Track (69.266mm,54.356mm)(71.882mm,54.356mm) on Bottom Layer Location : [X = 71.511mm][Y = 54.356mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2298.39mil|Location2.Y=2381.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2298.39mil|Location2.Y=2381.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-23(87.122mm,59.436mm) on Multi-Layer And Track (87.122mm,59.436mm)(94.037mm,59.436mm) on Bottom Layer Location : [X = 87.493mm][Y = 59.436mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2398.39mil|Location2.Y=2481.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2398.39mil|Location2.Y=2481.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-24(87.122mm,61.976mm) on Multi-Layer And Track (87.122mm,61.976mm)(93.726mm,61.976mm) on Bottom Layer Location : [X = 87.493mm][Y = 61.976mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2498.39mil|Location2.Y=2581.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2498.39mil|Location2.Y=2581.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-25(87.122mm,64.516mm) on Multi-Layer And Track (87.122mm,64.516mm)(93.218mm,64.516mm) on Bottom Layer Location : [X = 87.493mm][Y = 64.516mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2598.39mil|Location2.Y=2681.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2598.39mil|Location2.Y=2681.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-26(87.122mm,67.056mm) on Multi-Layer And Track (87.122mm,67.056mm)(91.313mm,67.056mm) on Bottom Layer Location : [X = 87.493mm][Y = 67.056mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2798.39mil|Location2.Y=2881.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=2798.39mil|Location2.Y=2881.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-28(87.122mm,72.136mm) on Multi-Layer And Track (87.122mm,72.136mm)(91.313mm,72.136mm) on Bottom Layer Location : [X = 87.493mm][Y = 72.136mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=3798.39mil|Location2.Y=3881.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3403.005mil|Location2.X=3486.225mil|Location1.Y=3798.39mil|Location2.Y=3881.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-38(87.122mm,97.536mm) on Multi-Layer And Track (87.122mm,97.536mm)(91.43mm,97.536mm) on Bottom Layer Location : [X = 87.493mm][Y = 97.536mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=3498.39mil|Location2.Y=3581.61mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2773.775mil|Location2.X=2856.995mil|Location1.Y=3498.39mil|Location2.Y=3581.61mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-6(71.882mm,89.916mm) on Multi-Layer And Track (66.294mm,89.916mm)(71.882mm,89.916mm) on Bottom Layer Location : [X = 71.511mm][Y = 89.916mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.277mil|Location2.X=2883.953mil|Location1.Y=3418.486mil|Location2.Y=3482.161mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2820.277mil|Location2.X=2883.953mil|Location1.Y=3418.486mil|Location2.Y=3482.161mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-7(71.882mm,87.376mm) on Multi-Layer And Track (72.263mm,87.808mm)(73.711mm,87.808mm) on Bottom Layer Location : [X = 72.444mm][Y = 87.638mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3072.265mil|Location2.X=3130.745mil|Location1.Y=1305.76mil|Location2.Y=1364.24mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3072.265mil|Location2.X=3130.745mil|Location1.Y=1305.76mil|Location2.Y=1364.24mil|Absolute=True">Short-Circuit Constraint: Between Pad SW1-1(79.248mm,34.163mm) on Multi-Layer And Track (70.759mm,33.909mm)(78.753mm,33.909mm) on Bottom Layer Location : [X = 78.778mm][Y = 33.909mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3070.284mil|Location2.X=3142.83mil|Location1.Y=1303.727mil|Location2.Y=1376.273mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3070.284mil|Location2.X=3142.83mil|Location1.Y=1303.727mil|Location2.Y=1376.273mil|Absolute=True">Short-Circuit Constraint: Between Pad SW1-1(79.248mm,34.163mm) on Multi-Layer And Track (78.753mm,33.909mm)(79.007mm,34.163mm) on Bottom Layer Location : [X = 78.907mm][Y = 34.036mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3081.819mil|Location2.X=3148.71mil|Location1.Y=1311.554mil|Location2.Y=1378.446mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3081.819mil|Location2.X=3148.71mil|Location1.Y=1311.554mil|Location2.Y=1378.446mil|Absolute=True">Short-Circuit Constraint: Between Pad SW1-1(79.248mm,34.163mm) on Multi-Layer And Track (79.007mm,34.163mm)(79.248mm,34.163mm) on Bottom Layer Location : [X = 79.128mm][Y = 34.163mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3070.156mil|Location2.X=3153.34mil|Location1.Y=1511.66mil|Location2.Y=1594.844mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3070.156mil|Location2.X=3153.34mil|Location1.Y=1511.66mil|Location2.Y=1594.844mil|Absolute=True">Short-Circuit Constraint: Between Pad SW1-2(79.248mm,39.243mm) on Multi-Layer And Track (76.708mm,41.783mm)(79.248mm,39.243mm) on Bottom Layer Location : [X = 79.038mm][Y = 39.453mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3086.661mil|Location2.X=3169.844mil|Location1.Y=1495.156mil|Location2.Y=1578.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3086.661mil|Location2.X=3169.844mil|Location1.Y=1495.156mil|Location2.Y=1578.339mil|Absolute=True">Short-Circuit Constraint: Between Pad SW1-2(79.248mm,39.243mm) on Multi-Layer And Track (79.248mm,39.243mm)(87.249mm,31.242mm) on Bottom Layer Location : [X = 79.458mm][Y = 39.033mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3645.107mil|Location2.X=3722.49mil|Location1.Y=4152.51mil|Location2.Y=4229.893mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3645.107mil|Location2.X=3722.49mil|Location1.Y=4152.51mil|Location2.Y=4229.893mil|Absolute=True">Short-Circuit Constraint: Between Pad U1-1(93.726mm,106.299mm) on Multi-Layer And Track (88.011mm,112.014mm)(93.726mm,106.299mm) on Bottom Layer Location : [X = 93.568mm][Y = 106.457mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3755.362mil|Location2.X=3824.638mil|Location1.Y=4144.11mil|Location2.Y=4213.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3755.362mil|Location2.X=3824.638mil|Location1.Y=4144.11mil|Location2.Y=4213.386mil|Absolute=True">Short-Circuit Constraint: Between Pad U1-2(96.266mm,106.299mm) on Multi-Layer And Track (96.266mm,77.089mm)(96.266mm,106.299mm) on Bottom Layer Location : [X = 96.266mm][Y = 106.14mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3955.362mil|Location2.X=4024.638mil|Location1.Y=4156.614mil|Location2.Y=4225.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3955.362mil|Location2.X=4024.638mil|Location1.Y=4156.614mil|Location2.Y=4225.89mil|Absolute=True">Short-Circuit Constraint: Between Pad U1-4(101.346mm,106.299mm) on Multi-Layer And Track (101.346mm,106.299mm)(101.346mm,111.633mm) on Bottom Layer Location : [X = 101.346mm][Y = 106.458mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3957.552mil|Location2.X=4034.646mil|Location1.Y=4152.552mil|Location2.Y=4229.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3957.552mil|Location2.X=4034.646mil|Location1.Y=4152.552mil|Location2.Y=4229.646mil|Absolute=True">Short-Circuit Constraint: Between Pad U1-4(101.346mm,106.299mm) on Multi-Layer And Track (101.346mm,106.299mm)(104.376mm,109.329mm) on Bottom Layer Location : [X = 101.501mm][Y = 106.454mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1653.505mil|Location2.X=1726.907mil|Location1.Y=3350.849mil|Location2.Y=3424.251mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1653.505mil|Location2.X=1726.907mil|Location1.Y=3350.849mil|Location2.Y=3424.251mil|Absolute=True">Short-Circuit Constraint: Between Pad U2-1(43.053mm,85.922mm) on Multi-Layer And Track (36.322mm,92.653mm)(43.053mm,85.922mm) on Bottom Layer Location : [X = 42.931mm][Y = 86.044mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1653.505mil|Location2.X=1726.907mil|Location1.Y=3341.261mil|Location2.Y=3414.663mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1653.505mil|Location2.X=1726.907mil|Location1.Y=3341.261mil|Location2.Y=3414.663mil|Absolute=True">Short-Circuit Constraint: Between Pad U2-1(43.053mm,85.922mm) on Multi-Layer And Track (39.046mm,81.915mm)(43.053mm,85.922mm) on Bottom Layer Location : [X = 42.931mm][Y = 85.8mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1661.509mil|Location2.X=1728.491mil|Location1.Y=3344.471mil|Location2.Y=3411.453mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1661.509mil|Location2.X=1728.491mil|Location1.Y=3344.471mil|Location2.Y=3411.453mil|Absolute=True">Short-Circuit Constraint: Between Pad U2-1(43.053mm,85.922mm) on Multi-Layer And Track (43.053mm,53.708mm)(43.053mm,85.922mm) on Bottom Layer Location : [X = 43.053mm][Y = 85.8mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1761.473mil|Location2.X=1828.527mil|Location1.Y=3344.389mil|Location2.Y=3411.443mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1761.473mil|Location2.X=1828.527mil|Location1.Y=3344.389mil|Location2.Y=3411.443mil|Absolute=True">Short-Circuit Constraint: Between Pad U2-2(45.593mm,85.922mm) on Multi-Layer And Track (45.593mm,68.58mm)(45.593mm,85.922mm) on Bottom Layer Location : [X = 45.593mm][Y = 85.799mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1861.473mil|Location2.X=1928.527mil|Location1.Y=3344.389mil|Location2.Y=3411.443mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1861.473mil|Location2.X=1928.527mil|Location1.Y=3344.389mil|Location2.Y=3411.443mil|Absolute=True">Short-Circuit Constraint: Between Pad U2-3(48.133mm,85.922mm) on Multi-Layer And Track (48.133mm,75.692mm)(48.133mm,85.922mm) on Bottom Layer Location : [X = 48.133mm][Y = 85.799mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1963.094mil|Location2.X=2036.486mil|Location1.Y=3350.85mil|Location2.Y=3424.242mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1963.094mil|Location2.X=2036.486mil|Location1.Y=3350.85mil|Location2.Y=3424.242mil|Absolute=True">Short-Circuit Constraint: Between Pad U2-4(50.673mm,85.922mm) on Multi-Layer And Track (50.673mm,85.922mm)(54.032mm,89.281mm) on Bottom Layer Location : [X = 50.795mm][Y = 86.044mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDD4GR3LPNA4RBJPAL23LEJGV3SKZSUSC50NDXZDOLBFBH1GKR0QUN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5301.383mil|Location2.X=5428.617mil|Location1.Y=2911.383mil|Location2.Y=3038.617mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5301.383mil|Location2.X=5428.617mil|Location1.Y=2911.383mil|Location2.Y=3038.617mil|Absolute=True">Hole Size Constraint: (3.2mm &gt; 2.54mm) Pad Free-2(136.271mm,75.565mm) on Multi-Layer Actual Hole Size = 3.2mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7013.981mil|Location2.X=7141.216mil|Location1.Y=2911.383mil|Location2.Y=3038.617mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7013.981mil|Location2.X=7141.216mil|Location1.Y=2911.383mil|Location2.Y=3038.617mil|Absolute=True">Hole Size Constraint: (3.2mm &gt; 2.54mm) Pad Free-2(179.771mm,75.565mm) on Multi-Layer Actual Hole Size = 3.2mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5301.383mil|Location2.X=5428.617mil|Location1.Y=1643.469mil|Location2.Y=1770.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5301.383mil|Location2.X=5428.617mil|Location1.Y=1643.469mil|Location2.Y=1770.704mil|Absolute=True">Hole Size Constraint: (3.2mm &gt; 2.54mm) Pad Free-4(136.271mm,43.36mm) on Multi-Layer Actual Hole Size = 3.2mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7013.981mil|Location2.X=7141.216mil|Location1.Y=1643.469mil|Location2.Y=1770.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7013.981mil|Location2.X=7141.216mil|Location1.Y=1643.469mil|Location2.Y=1770.704mil|Absolute=True">Hole Size Constraint: (3.2mm &gt; 2.54mm) Pad Free-4(179.771mm,43.36mm) on Multi-Layer Actual Hole Size = 3.2mm</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDIQDW10ZHYKAXGEGY53BDLTDQVD0XNXBESIY3V4LT0TCDA3SL5JBN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4515.077mil|Location2.X=4522.744mil|Location1.Y=1679.819mil|Location2.Y=1687.485mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4515.077mil|Location2.X=4522.744mil|Location1.Y=1679.819mil|Location2.Y=1687.485mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (113.222mm,39.853mm) on Top Overlay And Pad Q2-1(113.538mm,42.418mm) on Multi-Layer [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4506.141mil|Location2.X=4513.807mil|Location1.Y=1446.226mil|Location2.Y=1453.892mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4506.141mil|Location2.X=4513.807mil|Location1.Y=1446.226mil|Location2.Y=1453.892mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (113.222mm,39.853mm) on Top Overlay And Pad Q2-3(113.538mm,37.338mm) on Multi-Layer [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4515.077mil|Location2.X=4522.744mil|Location1.Y=2044.819mil|Location2.Y=2052.485mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4515.077mil|Location2.X=4522.744mil|Location1.Y=2044.819mil|Location2.Y=2052.485mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (113.222mm,49.124mm) on Top Overlay And Pad Q1-1(113.538mm,51.689mm) on Multi-Layer [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4506.141mil|Location2.X=4513.807mil|Location1.Y=1811.226mil|Location2.Y=1818.892mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4506.141mil|Location2.X=4513.807mil|Location1.Y=1811.226mil|Location2.Y=1818.892mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (113.222mm,49.124mm) on Top Overlay And Pad Q1-3(113.538mm,46.609mm) on Multi-Layer [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3099.554mil|Location2.X=3107.221mil|Location1.Y=1377.497mil|Location2.Y=1385.164mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3099.554mil|Location2.X=3107.221mil|Location1.Y=1377.497mil|Location2.Y=1385.164mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (79.248mm,36.682mm) on Top Overlay And Pad SW1-1(79.248mm,34.163mm) on Multi-Layer [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.906mil|Location2.X=3115.572mil|Location1.Y=1504.812mil|Location2.Y=1512.478mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.906mil|Location2.X=3115.572mil|Location1.Y=1504.812mil|Location2.Y=1512.478mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Arc (79.248mm,36.682mm) on Top Overlay And Pad SW1-2(79.248mm,39.243mm) on Multi-Layer [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1307.771mil|Location2.X=1319.021mil|Location1.Y=2032.771mil|Location2.Y=2044.021mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1307.771mil|Location2.X=1319.021mil|Location1.Y=2032.771mil|Location2.Y=2044.021mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.17mm &lt; 0.254mm) Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (31.115mm,53.721mm)(34.798mm,50.038mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.17mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1322.921mil|Location2.X=1330.588mil|Location1.Y=2054.412mil|Location2.Y=2062.079mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1322.921mil|Location2.X=1330.588mil|Location1.Y=2054.412mil|Location2.Y=2062.079mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (31.75mm,54.229mm)(35.941mm,50.038mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1336.883mil|Location2.X=1344.55mil|Location1.Y=2085.45mil|Location2.Y=2093.117mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1336.883mil|Location2.X=1344.55mil|Location1.Y=2085.45mil|Location2.Y=2093.117mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (32.512mm,54.61mm)(37.084mm,50.038mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1383.169mil|Location2.X=1390.835mil|Location1.Y=2084.164mil|Location2.Y=2091.831mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1383.169mil|Location2.X=1390.835mil|Location1.Y=2084.164mil|Location2.Y=2091.831mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C1-2(34.163mm,52.578mm) on Multi-Layer And Track (33.401mm,54.864mm)(38.227mm,50.038mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2349.164mil|Location2.X=2356.831mil|Location1.Y=1828.169mil|Location2.Y=1835.835mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2349.164mil|Location2.X=2356.831mil|Location1.Y=1828.169mil|Location2.Y=1835.835mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (56.769mm,49.53mm)(61.595mm,44.704mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2389.936mil|Location2.X=2397.603mil|Location1.Y=1832.397mil|Location2.Y=1840.064mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2389.936mil|Location2.X=2397.603mil|Location1.Y=1832.397mil|Location2.Y=1840.064mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (57.912mm,49.53mm)(62.484mm,44.958mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2379.499mil|Location2.X=2387.166mil|Location1.Y=1887.834mil|Location2.Y=1895.501mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2379.499mil|Location2.X=2387.166mil|Location1.Y=1887.834mil|Location2.Y=1895.501mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (59.055mm,49.53mm)(63.246mm,45.339mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2420.979mil|Location2.X=2432.229mil|Location1.Y=1875.979mil|Location2.Y=1887.229mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2420.979mil|Location2.X=2432.229mil|Location1.Y=1875.979mil|Location2.Y=1887.229mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.17mm &lt; 0.254mm) Between Pad C2-2(60.833mm,46.99mm) on Multi-Layer And Track (60.198mm,49.53mm)(63.881mm,45.847mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.17mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1431.167mil|Location2.X=1438.833mil|Location1.Y=1551.167mil|Location2.Y=1558.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1431.167mil|Location2.X=1438.833mil|Location1.Y=1551.167mil|Location2.Y=1558.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad JDC1-1(38.481mm,39.624mm) on Multi-Layer And Track (34.671mm,39.497mm)(43.053mm,39.497mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1691.167mil|Location2.X=1698.833mil|Location1.Y=1412.518mil|Location2.Y=1420.185mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1691.167mil|Location2.X=1698.833mil|Location1.Y=1412.518mil|Location2.Y=1420.185mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad JDC1-3(43.561mm,37.084mm) on Multi-Layer And Track (43.053mm,25.654mm)(43.053mm,39.497mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4415.321mil|Location2.X=4422.988mil|Location1.Y=2039.076mil|Location2.Y=2046.742mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4415.321mil|Location2.X=4422.988mil|Location1.Y=2039.076mil|Location2.Y=2046.742mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad Q1-1(113.538mm,51.689mm) on Multi-Layer And Track (111.887mm,51.638mm)(112.516mm,52.079mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4481.375mil|Location2.X=4492.625mil|Location1.Y=1796.358mil|Location2.Y=1807.608mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4481.375mil|Location2.X=4492.625mil|Location1.Y=1796.358mil|Location2.Y=1807.608mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0mm &lt; 0.254mm) Between Pad Q1-3(113.538mm,46.609mm) on Multi-Layer And Text "Q2" (112.065mm,44.12mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4416.279mil|Location2.X=4423.946mil|Location1.Y=1818.61mil|Location2.Y=1826.277mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4416.279mil|Location2.X=4423.946mil|Location1.Y=1818.61mil|Location2.Y=1826.277mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad Q1-3(113.538mm,46.609mm) on Multi-Layer And Track (111.887mm,46.482mm)(112.547mm,46.152mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4415.321mil|Location2.X=4422.988mil|Location1.Y=1674.076mil|Location2.Y=1681.742mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4415.321mil|Location2.X=4422.988mil|Location1.Y=1674.076mil|Location2.Y=1681.742mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad Q2-1(113.538mm,42.418mm) on Multi-Layer And Track (111.887mm,42.367mm)(112.516mm,42.808mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4416.279mil|Location2.X=4423.946mil|Location1.Y=1453.61mil|Location2.Y=1461.277mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4416.279mil|Location2.X=4423.946mil|Location1.Y=1453.61mil|Location2.Y=1461.277mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad Q2-3(113.538mm,37.338mm) on Multi-Layer And Track (111.887mm,37.211mm)(112.547mm,36.881mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2408.167mil|Location2.X=2415.833mil|Location1.Y=1331.167mil|Location2.Y=1338.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2408.167mil|Location2.X=2415.833mil|Location1.Y=1331.167mil|Location2.Y=1338.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R1-1(60.559mm,33.909mm) on Multi-Layer And Track (61.265mm,33.909mm)(62.586mm,33.909mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2754.834mil|Location2.X=2762.501mil|Location1.Y=1331.167mil|Location2.Y=1338.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2754.834mil|Location2.X=2762.501mil|Location1.Y=1331.167mil|Location2.Y=1338.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R1-2(70.759mm,33.909mm) on Multi-Layer And Track (68.758mm,33.909mm)(70.079mm,33.909mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4798.167mil|Location2.X=4805.833mil|Location1.Y=1926.167mil|Location2.Y=1933.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4798.167mil|Location2.X=4805.833mil|Location1.Y=1926.167mil|Location2.Y=1933.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R2-1(121.265mm,49.022mm) on Multi-Layer And Track (121.971mm,49.022mm)(123.292mm,49.022mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5144.834mil|Location2.X=5152.501mil|Location1.Y=1926.167mil|Location2.Y=1933.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5144.834mil|Location2.X=5152.501mil|Location1.Y=1926.167mil|Location2.Y=1933.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R2-2(131.465mm,49.022mm) on Multi-Layer And Track (129.464mm,49.022mm)(130.785mm,49.022mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4793.167mil|Location2.X=4800.833mil|Location1.Y=1566.167mil|Location2.Y=1573.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4793.167mil|Location2.X=4800.833mil|Location1.Y=1566.167mil|Location2.Y=1573.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R3-1(121.138mm,39.878mm) on Multi-Layer And Track (121.844mm,39.878mm)(123.165mm,39.878mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5139.834mil|Location2.X=5147.501mil|Location1.Y=1566.167mil|Location2.Y=1573.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5139.834mil|Location2.X=5147.501mil|Location1.Y=1566.167mil|Location2.Y=1573.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R3-2(131.338mm,39.878mm) on Multi-Layer And Track (129.337mm,39.878mm)(130.658mm,39.878mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3783.167mil|Location2.X=3790.833mil|Location1.Y=1821.167mil|Location2.Y=1828.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3783.167mil|Location2.X=3790.833mil|Location1.Y=1821.167mil|Location2.Y=1828.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R4-1(95.484mm,46.355mm) on Multi-Layer And Track (96.19mm,46.355mm)(97.511mm,46.355mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.834mil|Location2.X=4137.501mil|Location1.Y=1821.167mil|Location2.Y=1828.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.834mil|Location2.X=4137.501mil|Location1.Y=1821.167mil|Location2.Y=1828.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R4-2(105.684mm,46.355mm) on Multi-Layer And Track (103.683mm,46.355mm)(105.004mm,46.355mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3783.167mil|Location2.X=3790.833mil|Location1.Y=1496.167mil|Location2.Y=1503.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3783.167mil|Location2.X=3790.833mil|Location1.Y=1496.167mil|Location2.Y=1503.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R5-1(95.484mm,38.1mm) on Multi-Layer And Track (96.19mm,38.1mm)(97.511mm,38.1mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.834mil|Location2.X=4137.501mil|Location1.Y=1496.167mil|Location2.Y=1503.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.834mil|Location2.X=4137.501mil|Location1.Y=1496.167mil|Location2.Y=1503.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R5-2(105.684mm,38.1mm) on Multi-Layer And Track (103.683mm,38.1mm)(105.004mm,38.1mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3086.634mil|Location2.X=3094.3mil|Location1.Y=1316.167mil|Location2.Y=1323.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3086.634mil|Location2.X=3094.3mil|Location1.Y=1316.167mil|Location2.Y=1323.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad SW1-1(79.248mm,34.163mm) on Multi-Layer And Track (76.073mm,33.528mm)(82.423mm,33.528mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3086.634mil|Location2.X=3094.3mil|Location1.Y=1566.167mil|Location2.Y=1573.833mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3086.634mil|Location2.X=3094.3mil|Location1.Y=1566.167mil|Location2.Y=1573.833mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad SW1-2(79.248mm,39.243mm) on Multi-Layer And Track (76.073mm,39.878mm)(82.423mm,39.878mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3684.375mil|Location2.X=3695.625mil|Location1.Y=4215.231mil|Location2.Y=4226.481mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3684.375mil|Location2.X=3695.625mil|Location1.Y=4215.231mil|Location2.Y=4226.481mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.171mm &lt; 0.254mm) Between Pad U1-1(93.726mm,106.299mm) on Multi-Layer And Track (93.726mm,107.549mm)(93.726mm,110.302mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.171mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3784.375mil|Location2.X=3795.625mil|Location1.Y=4215.239mil|Location2.Y=4226.489mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3784.375mil|Location2.X=3795.625mil|Location1.Y=4215.239mil|Location2.Y=4226.489mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.17mm &lt; 0.254mm) Between Pad U1-2(96.266mm,106.299mm) on Multi-Layer And Track (96.266mm,107.549mm)(96.266mm,110.302mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.17mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3884.375mil|Location2.X=3895.625mil|Location1.Y=4215.239mil|Location2.Y=4226.489mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3884.375mil|Location2.X=3895.625mil|Location1.Y=4215.239mil|Location2.Y=4226.489mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.17mm &lt; 0.254mm) Between Pad U1-3(98.806mm,106.299mm) on Multi-Layer And Track (98.806mm,107.549mm)(98.806mm,110.302mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.17mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3984.375mil|Location2.X=3995.625mil|Location1.Y=4215.239mil|Location2.Y=4226.489mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\MSI\Desktop\DAMH2\Project_2\03. Design\Pcb_Stm32_LORA\PCB_Project\PCB2.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3984.375mil|Location2.X=3995.625mil|Location1.Y=4215.239mil|Location2.Y=4226.489mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.17mm &lt; 0.254mm) Between Pad U1-4(101.346mm,106.299mm) on Multi-Layer And Track (101.346mm,107.549mm)(101.346mm,110.302mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.17mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

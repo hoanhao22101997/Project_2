@@ -1,0 +1,23 @@
+Added Component: Designator=MQ1(JP 1x4 CC)
+Add component (AddParameter): Name = "Chung_Loai"; Value = "C?m"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Don_Vi"; Value = "Con"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ghi_Chu"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Kieu_Chan"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ma_Hang"; Value = "MH001265"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ten_Linh_Kien"; Value = "Jump Ðon Cái 2.54MM 1x40P Cong"; VariantName = "[No Variations]"
+Added Component: Designator=MQ2(JP 1x4 CC)
+Add component (AddParameter): Name = "Chung_Loai"; Value = "C?m"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Don_Vi"; Value = "Con"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ghi_Chu"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Kieu_Chan"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ma_Hang"; Value = "MH001265"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ten_Linh_Kien"; Value = "Jump Ðon Cái 2.54MM 1x40P Cong"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetJP1_1 Pin=MQ1-1
+Added Pin To Net: NetName=NetLORA AS1_6 Pin=MQ1-2
+Added Pin To Net: NetName=NetMQ1_4 Pin=MQ1-4
+Added Pin To Net: NetName=NetLORA AS1_6 Pin=MQ2-1
+Added Pin To Net: NetName=NetJP1_1 Pin=MQ2-2
+Added Pin To Net: NetName=NetMQ2_4 Pin=MQ2-4
+Added Member To Class: ClassName=Schematic Member=Component MQ1 MQ7
+Added Member To Class: ClassName=Schematic Member=Component MQ2 MQ135
+Added Member To Class: ClassName=Schematic Member=Component R3 1k
